@@ -1,9 +1,7 @@
-import React, {Component} from 'react'
+import {Form} from './Form'
+import {Table} from './Table'
+import {TextField} from './TextField'
+import {IntField} from './IntField'
+import {DateField} from './DateField'
 
-export default class extends Component {
-  render() {
-    return <div>
-      <h2>Welcome to React components</h2>
-    </div>
-  }
-}
+export {Table, Form, TextField, IntField, DateField}

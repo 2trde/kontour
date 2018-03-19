@@ -1,14 +1,64 @@
 import React, {Component} from 'react'
 import {render} from 'react-dom'
-
-import Example from '../../src'
+import {Table} from '../../src'
+import {Form} from '../../src'
+import {IntField} from '../../src'
+import {TextField} from '../../src'
+import {DateField} from '../../src'
+import moment from 'moment'
 
 class Demo extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      day: moment(),
+      auction: {
+        id: 123,
+        maker: "Volkswagen",
+        model: "Golf",
+        mileage: 90000,
+        registration_date: '2008-08-01'
+      },
+      list: [
+        {
+          id: 1,
+          maker: "Volkswagen",
+          model: "Golf",
+          mileage: 90000
+        },
+        {
+          id: 2,
+          maker: "BMW",
+          model: "335",
+          mileage: 61000 
+        },
+        {
+          id: 3,
+          maker: "Audi",
+          model: "A5",
+          mileage: 30000
+        },
+      ]
+    };
+  }
+
   render() {
-    return <div>
-      <h1>masc Demo</h1>
-      <Example/>
-    </div>
+    return (
+      <div className="container">
+        <h1>Form example</h1>
+        <Table edit={true} value={this.state.list} onChange={(val) => this.setState({list: val})}>
+          <TextField label="Hersteller" attr="maker" />
+          <TextField label="Modell" attr="model" />
+          <IntField label="Laufleistung" attr="mileage" />
+        </Table>
+        <Form edit={true} value={this.state.auction} onChange={(val) => this.setState({auction: val})}>
+          <TextField label="Hersteller" attr="maker" />
+          <TextField label="Modell" attr="model" />
+          <IntField label="Laufleistung" attr="mileage" />
+          <DateField label="Erstzulassung" attr="registration_date" />
+        </Form>
+      </div>
+    );
   }
 }
 
