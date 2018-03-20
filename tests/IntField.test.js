@@ -9,12 +9,12 @@ import sinon from 'sinon'
 describe('IntField', () => {
   it('renders a number in display mode', () => {
     const wrapper = mount(<IntField edit={false} value={123}/>)
-    expect(wrapper.find('div').text()).toBe('123')
+    expect(wrapper.find('span').text()).toBe('123')
   });
 
   it('renders null in display mode', () => {
     const wrapper = mount(<IntField edit={false} value={null}/>)
-    expect(wrapper.find('div').text()).toBe('')
+    expect(wrapper.find('span').text()).toBe('')
   });
 
   it('renders a input field in edit mode', () => {

@@ -9,12 +9,12 @@ import sinon from 'sinon'
 describe('DateField', () => {
   it('renders a date in display mode', () => {
     const wrapper = mount(<DateField edit={false} value={'2014-05-11'}/>)
-    expect(wrapper.find('div').text()).toBe('11.05.2014')
+    expect(wrapper.find('span').text()).toBe('11.05.2014')
   });
 
   it('renders null in display mode', () => {
     const wrapper = mount(<DateField edit={false} value={null}/>)
-    expect(wrapper.find('div').text()).toBe('')
+    expect(wrapper.find('span').text()).toBe('')
   });
 
   it('renders a date field in edit mode', () => {

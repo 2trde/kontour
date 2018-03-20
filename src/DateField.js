@@ -20,9 +20,9 @@ class DateField extends Field {
   renderShow() {
     const date = this.props.value ? moment(this.props.value) : null
     return (
-      <div>
+      <span>
         {date ? date.format('DD.MM.YYYY') : ''}
-      </div>
+      </span>
     )
   }
   onChange(e) {

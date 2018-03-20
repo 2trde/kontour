@@ -11,9 +11,9 @@ describe('TextField', () => {
     const wrapper = mount(<TextField edit={false} value={"Foo"}/>)
     expect(
       wrapper.containsMatchingElement(
-        <div>
+        <span>
           Foo
-        </div>
+        </span>
       )
     ).toBeTruthy()
   });

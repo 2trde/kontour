@@ -3,9 +3,9 @@ import React, { Component } from 'react'
 class Field extends Component {
   renderShow() {
     return (
-      <div>
+      <span>
         {this.props.value}
-      </div>
+      </span>
     )
   }
   render() {

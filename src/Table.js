@@ -13,17 +13,34 @@ class Table extends Component {
     return React.Children.map(this.props.children, function(child) {
       return React.cloneElement(child, {
         row: row,
-        value: row[child.props.attr],
+        value: this.getAttribute(row, child.props.attr),
         onChange: (newValue) => this.changeAttribute(idx, child.props.attr, newValue),
         edit: this.props.edit
       })
     }.bind(this))
   }
 
+  getAttribute(obj, attrStr) {
+    const attrList = attrStr.split('.')
+    return this.getAttributeRec(obj, attrList)
+  }
+
+  getAttributeRec(obj, attrList) {
+    if (attrList.length > 1) {
+      const newList = attrList.slice(1)
+      return this.getAttributeRec(obj[attrList[0]], newList)
+    }
+    else
+    {
+      const val = obj[attrList[0]]
+      return val 
+    }
+  }
+
   renderHeader() {
-    let header = React.Children.map(this.props.children, function(child) {
-            return <th>{child.props.label}</th>
-          })
+    let header = React.Children.map(this.props.children, function(child, idx) {
+      return <th key={idx}>{child.props.label}</th>
+    })
     return (
       <tr>
         {header}
@@ -34,7 +51,7 @@ class Table extends Component {
   renderRow(obj, idx) {
     return React.Children.map(this.childrenWithProps(obj, idx), (child) => {
       return (
-        <td>
+        <td key={idx}>
           {child}
         </td>
       )
@@ -42,6 +59,8 @@ class Table extends Component {
   }
 
   renderRows() {
+    if (this.props.value == null)
+      return null
     return ( 
       this.props.value.map(function(row, idx) {
         return (
