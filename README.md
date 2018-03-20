@@ -4,7 +4,10 @@
 [![npm package][npm-badge]][npm]
 [![Coveralls][coveralls-badge]][coveralls]
 
-Describe Kontour here.
+Kontour is an opiniated framework to render forms and tables. Both table and form support both
+editing and displaying of data. Each field component that can be used supports both modes.
+
+Large forms can be created once and support both displaying and editing by changing a property.
 
 [build-badge]: https://img.shields.io/travis/user/repo/master.png?style=flat-square
 [build]: https://travis-ci.org/user/repo
