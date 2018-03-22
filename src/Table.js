@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import {getAttribute, setAttribute} from './ObjectHelper'
 
 class Table extends Component {
   changeAttribute(idx, attribute, value) {
-    let newList = this.props.value.slice()
-    let newValue = newList[idx]
-    newValue[attribute] = value
+    const newList = this.props.value.slice()
+    const newValue = setAttribute(newList[idx], attribute, value)
+    newList[idx] = newValue
     if (this.props.onChange)
       this.props.onChange(newList)
   }
@@ -13,28 +14,11 @@ class Table extends Component {
     return React.Children.map(this.props.children, function(child) {
       return React.cloneElement(child, {
         row: row,
-        value: this.getAttribute(row, child.props.attr),
+        value: getAttribute(row, child.props.attr),
         onChange: (newValue) => this.changeAttribute(idx, child.props.attr, newValue),
         edit: this.props.edit
       })
     }.bind(this))
-  }
-
-  getAttribute(obj, attrStr) {
-    const attrList = attrStr.split('.')
-    return this.getAttributeRec(obj, attrList)
-  }
-
-  getAttributeRec(obj, attrList) {
-    if (attrList.length > 1) {
-      const newList = attrList.slice(1)
-      return this.getAttributeRec(obj[attrList[0]], newList)
-    }
-    else
-    {
-      const val = obj[attrList[0]]
-      return val 
-    }
   }
 
   renderHeader() {
@@ -61,7 +45,7 @@ class Table extends Component {
   renderRows() {
     if (this.props.value == null)
       return null
-    return ( 
+    return (
       this.props.value.map(function(row, idx) {
         return (
           <tr key={row.id}>

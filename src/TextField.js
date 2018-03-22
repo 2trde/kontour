@@ -35,7 +35,7 @@ class TextField extends Field {
     return ''+value
   }
   isValidText(text) {
-    return true 
+    return true
   }
   textToValue(text) {
     return text
