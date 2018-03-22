@@ -10,15 +10,42 @@ const RenderTextInput = ({invalid, onChange, value}) => {
 }
 
 class TextField extends Field {
+  constructor(props) {
+    super(props)
+    this.state = { invalid: false, value: this.valueToText(props.value) }
+  }
   onChange(e) {
-    if (this.props.onChange)
-      this.props.onChange(e.target.value)
+    const text = e.target.value
+    if (text == '') {
+      this.setState({value: text, invalid: false})
+      if (this.props.onChange)
+        this.props.onChange(null)
+    }
+    else if (this.isValidText(text)) {
+      this.setState({value: text, invalid: false})
+      if (this.props.onChange)
+        this.props.onChange(this.textToValue(text))
+    } else {
+      this.setState({value: text, invalid: true})
+    }
+  }
+  valueToText(value) {
+    if (value == null)
+      return ''
+    return ''+value
+  }
+  isValidText(text) {
+    return true 
+  }
+  textToValue(text) {
+    return text
   }
   renderEdit() {
     const props = {
+      invalid: this.state.invalid,
       className: "form-control",
       onChange: this.onChange.bind(this),
-      value: this.props.value
+      value: this.state.value
     }
     return <RenderTextInput {...props}/>
   }

@@ -1,36 +1,12 @@
 import React from 'react'
-import {Field} from './Field'
-import {RenderTextInput} from './TextField'
+import {TextField} from './TextField'
 
-class IntField extends Field {
-  constructor(props) {
-    super(props)
-    this.state = { value: props.value, invalid: false }
+class IntField extends TextField {
+  isValidText(value) {
+    return value.match(/^\d*$/) 
   }
-  onChange(e) {
-    const newText = e.target.value
-    if (newText.trim() === '') {
-      this.setState({value: newText, cls: "valid"})
-      if (this.props.onChange)
-        this.props.onChange(null)
-    }
-    else if (newText.match(/^ *\d* *$/)) {
-      this.setState({value: newText, invalid: false})
-      if (this.props.onChange)
-        this.props.onChange(parseInt(e.target.value, 10))
-    }
-    else
-    {
-      this.setState({value: newText, invalid: true})
-    }
-  }
-  renderEdit() {
-    const props = {
-      invalid: this.state.invalid,
-      onChange: this.onChange.bind(this),
-      value: this.state.value
-    }
-    return <RenderTextInput {...props}/>
+  textToValue(text) {
+    return parseInt(text, 10)
   }
 }
 
