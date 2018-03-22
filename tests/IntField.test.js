@@ -31,6 +31,7 @@ describe('IntField', () => {
     const mockOnChange = sinon.spy();
     const wrapper = mount(<IntField edit={true} value={'123'} onChange={mockOnChange}/>)
     wrapper.find('input').simulate('change', { target: { value: '456' }})
+    expect(wrapper.find('input').prop('className')).toBe('form-control')
     expect(mockOnChange.withArgs(456));
   });
 
@@ -38,13 +39,14 @@ describe('IntField', () => {
     const mockOnChange = sinon.spy();
     const wrapper = mount(<IntField edit={true} value={'123'} onChange={mockOnChange}/>)
     wrapper.find('input').simulate('change', { target: { value: '456a' }})
-    expect(mockOnChange.notCalled);
+    expect(wrapper.find('input').prop('className')).toBe('form-control is-invalid')
+    expect(mockOnChange.notCalled).toExist();
   });
 
   it('change to null', () => {
     const mockOnChange = sinon.spy();
     const wrapper = mount(<IntField edit={true} value={'123'} onChange={mockOnChange}/>)
     wrapper.find('input').simulate('change', { target: { value: '' }})
-    expect(mockOnChange.withArgs(null));
+    expect(mockOnChange.withArgs(null)).toExist();
   });
 })

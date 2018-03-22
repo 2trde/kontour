@@ -31,21 +31,21 @@ describe('DateField', () => {
     const mockOnChange = sinon.spy();
     const wrapper = mount(<DateField edit={true} value={'11.05.2014'} onChange={mockOnChange}/>)
     wrapper.find('input').simulate('change', { target: { value: '12.06.2015' }})
-    expect(mockOnChange.calledWith('2015-06-12'));
+    expect(mockOnChange.calledWith('2015-06-12')).toExist();
   });
 
   it('invalid change', () => {
     const mockOnChange = sinon.spy();
     const wrapper = mount(<DateField edit={true} value={'123'} onChange={mockOnChange}/>)
     wrapper.find('input').simulate('change', { target: { value: '456a' }})
-    expect(mockOnChange.notCalled);
+    expect(mockOnChange.notCalled).toExist();
   });
 
   it('change to null (empty text)', () => {
     const mockOnChange = sinon.spy();
     const wrapper = mount(<DateField edit={true} value={'11.05.2014'} onChange={mockOnChange}/>)
     wrapper.find('input').simulate('change', { target: { value: '' }})
-    expect(mockOnChange.calledWith(null));
+    expect(mockOnChange.calledWith(null)).toExist();;
   });
 })
 

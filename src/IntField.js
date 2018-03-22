@@ -5,7 +5,7 @@ import {RenderTextInput} from './TextField'
 class IntField extends Field {
   constructor(props) {
     super(props)
-    this.state = { value: props.value, cls: "valid" }
+    this.state = { value: props.value, invalid: false }
   }
   onChange(e) {
     const newText = e.target.value
@@ -15,18 +15,18 @@ class IntField extends Field {
         this.props.onChange(null)
     }
     else if (newText.match(/^ *\d* *$/)) {
-      this.setState({value: newText, cls: "valid"})
+      this.setState({value: newText, invalid: false})
       if (this.props.onChange)
         this.props.onChange(parseInt(e.target.value, 10))
     }
     else
     {
-      this.setState({value: newText, cls: "is-invalid "})
+      this.setState({value: newText, invalid: true})
     }
   }
   renderEdit() {
     const props = {
-      className: this.state.cls + " form-control",
+      invalid: this.state.invalid,
       onChange: this.onChange.bind(this),
       value: this.state.value
     }

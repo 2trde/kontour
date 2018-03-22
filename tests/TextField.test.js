@@ -31,6 +31,6 @@ describe('TextField', () => {
     const mockOnChange = sinon.spy();
     const wrapper = mount(<TextField edit={true} value={'Foo'} onChange={mockOnChange}/>)
     wrapper.find('input').simulate('change', { target: { value: 'Bar' }})
-    expect(mockOnChange.withArgs('Bar'));
+    expect(mockOnChange.withArgs('Bar')).toExist();
   });
 })

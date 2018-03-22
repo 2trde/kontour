@@ -1,9 +1,11 @@
 import React from 'react'
 import {Field} from './Field'
 
-const RenderTextInput = (props) => {
+const RenderTextInput = ({invalid, onChange, value}) => {
+  const validClass = invalid ? 'is-invalid' : ''
+  const classNames = ('form-control ' + validClass).trim()
   return (
-    <input type="text" style={ {display: 'inline-block'} } className={props.className} onChange={props.onChange} value={props.value ? props.value : ''}/>
+    <input type="text" style={ {display: 'inline-block'} } className={classNames} onChange={onChange} value={value ? value : ''}/>
   )
 }
 
