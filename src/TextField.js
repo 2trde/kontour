@@ -14,6 +14,11 @@ class TextField extends Field {
     super(props)
     this.state = { invalid: false, value: this.valueToText(props.value) }
   }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.value !== this.props.value) {
+      this.setState({value: this.valueToText(nextProps.value)})
+    }
+  }
   onChange(e) {
     const text = e.target.value
     if (text == '') {
@@ -32,7 +37,7 @@ class TextField extends Field {
   valueToText(value) {
     if (value == null)
       return ''
-    return ''+value
+    return value
   }
   isValidText(text) {
     return true

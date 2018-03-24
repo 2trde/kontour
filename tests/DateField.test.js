@@ -17,6 +17,7 @@ describe('DateField', () => {
     expect(wrapper.find('span').text()).toBe('')
   });
 
+
   it('renders a date field in edit mode', () => {
     const wrapper = mount(<DateField edit={true} value={'2014-05-11'}/>)
     expect(wrapper.find('input').prop('value')).toBe('11.05.2014')

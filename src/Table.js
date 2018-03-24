@@ -1,6 +1,16 @@
 import React, { Component } from 'react'
 import {getAttribute, setAttribute} from './ObjectHelper'
 
+const RenderTableHeader = ({children}) => {
+  return (
+    <tbody>
+      <tr>
+        {React.Children.map(children, (child, idx) => <th key={idx}>{child.props.label}</th>)}
+      </tr>
+    </tbody>
+  )
+}
+
 class Table extends Component {
   changeAttribute(idx, attribute, value) {
     const newList = this.props.value.slice()
@@ -21,17 +31,6 @@ class Table extends Component {
     }.bind(this))
   }
 
-  renderHeader() {
-    let header = React.Children.map(this.props.children, function(child, idx) {
-      return <th key={idx}>{child.props.label}</th>
-    })
-    return (
-      <tr>
-        {header}
-      </tr>
-    )
-  }
-
   renderRow(obj, idx) {
     return React.Children.map(this.childrenWithProps(obj, idx), (child) => {
       return (
@@ -42,17 +41,23 @@ class Table extends Component {
     })
   }
 
+  handleClickRow(row, idx) {
+    if (this.props.onRowClick) {
+      this.props.onRowClick(row, idx)
+    }
+  }
+
   renderRows() {
     if (this.props.value == null)
       return null
     return (
-      this.props.value.map(function(row, idx) {
+      this.props.value.map((row, idx) => {
         return (
-          <tr key={row.id}>
+          <tr key={row.id} onClick={() => this.handleClickRow(row, idx) }>
             {this.renderRow(row, idx)}
           </tr>
         )
-      }.bind(this))
+      })
     )
   }
 
@@ -60,9 +65,7 @@ class Table extends Component {
     let rows = this.renderRows()
     return (
       <table className="table">
-        <thead>
-          { this.renderHeader() }
-        </thead>
+        <RenderTableHeader children={this.props.children}/>
         <tbody>
           { rows }
         </tbody>
