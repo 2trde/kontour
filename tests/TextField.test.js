@@ -33,4 +33,16 @@ describe('TextField', () => {
     wrapper.find('input').simulate('change', { target: { value: 'Bar' }})
     expect(mockOnChange.withArgs('Bar')).toExist();
   });
+
+  it('detects invalid input with regex', () => {
+    const mockOnChange = sinon.spy();
+    const wrapper = mount(<TextField edit={true} value={'123'} regex={/\d\d\d/} onChange={mockOnChange}/>)
+    wrapper.find('input').simulate('change', { target: { value: 'Bar' }})
+    expect(mockOnChange.notCalled).toBeTruthy();
+    expect(
+      wrapper.containsMatchingElement(
+        <input className="form-control is-invalid" value="Bar"/>
+      )
+    ).toBeTruthy()
+  });
 })

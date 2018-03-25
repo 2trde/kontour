@@ -14,7 +14,7 @@ describe('DateField', () => {
 
   it('renders null in display mode', () => {
     const wrapper = mount(<DateField edit={false} value={null}/>)
-    expect(wrapper.find('span').text()).toBe('')
+    expect(wrapper.find('span').text()).toBe("\u00A0")
   });
 
 

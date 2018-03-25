@@ -2,9 +2,14 @@ import React, { Component } from 'react'
 
 class Field extends Component {
   renderShow() {
+    let text = ''
+    if (this.props.value && this.props.value)
+      text = ''+this.props.value
+    if (text.trim() == '')
+      text = "\u00A0"
     return (
       <span>
-        {this.props.value}
+        {text}
       </span>
     )
   }

@@ -12,7 +12,10 @@ const RenderTextInput = ({invalid, onChange, value}) => {
 class TextField extends Field {
   constructor(props) {
     super(props)
-    this.state = { invalid: false, value: this.valueToText(props.value) }
+    this.state = {
+      invalid: false,
+      value: this.valueToText(props.value)
+    }
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.value !== this.props.value) {
@@ -26,7 +29,7 @@ class TextField extends Field {
       if (this.props.onChange)
         this.props.onChange(null)
     }
-    else if (this.isValidText(text)) {
+    else if (this._isValidText(text)) {
       this.setState({value: text, invalid: false})
       if (this.props.onChange)
         this.props.onChange(this.textToValue(text))
@@ -40,10 +43,28 @@ class TextField extends Field {
     return value
   }
   isValidText(text) {
+    if (this.props.regex) {
+      return text.match(this.props.regex) 
+    }
     return true
+  }
+  _isValidText(text) {
+    return text === null || text === '' || this.isValidText(text)
   }
   textToValue(text) {
     return text
+  }
+  renderShow() {
+    let text = ''
+    if (this.props.value)
+      text = ''+this.valueToText(this.props.value)
+    if (text.trim() == '')
+      text = "\u00A0"
+    return (
+      <span>
+        {text}
+      </span>
+    )
   }
   renderEdit() {
     const props = {

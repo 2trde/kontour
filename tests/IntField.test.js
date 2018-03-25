@@ -14,7 +14,7 @@ describe('IntField', () => {
 
   it('renders null in display mode', () => {
     const wrapper = mount(<IntField edit={false} value={null}/>)
-    expect(wrapper.find('span').text()).toBe('')
+    expect(wrapper.find('span').text()).toBe(' ')
   });
 
   it('renders a input field in edit mode', () => {

@@ -1,52 +1,27 @@
 import React from 'react'
-import {Field} from './Field'
+import {TextField} from './TextField'
 import {RenderTextInput} from './TextField'
 import Calendar from './Calendar'
 import {MyModal} from './MyModal'
 import moment from 'moment'
 
-class DateField extends Field {
-  constructor(props) {
-    super(props)
-    
-    const date = (props) ? moment(props.value, 'YYYY-MM-DD') : moment()
-    const text = props.value ? date.format('DD.MM.YYYY') : ""
-    this.state = {
-      value: text,
-      cls: "valid",
-      showCalendar: false
+class DateField extends TextField {
+  valueToText(value) {
+    if (typeof(value) == 'string') {
+      value = moment(value, "YYYY-MM-DD")
     }
+    return (value) ? value.format('DD.MM.YYYY') : ''
   }
-  renderShow() {
-    const date = this.props.value ? moment(this.props.value) : null
-    return (
-      <span>
-        {date ? date.format('DD.MM.YYYY') : ''}
-      </span>
-    )
+  isValidText(text) {
+    const date = moment(text, "DD.MM.YYYY", true)
+    return date.isValid()
   }
-  onChange(e) {
-    const newText = e.target.value
-    const date = moment(newText, "DD.MM.YYYY", true)
-    if (newText.trim() === '') {
-      this.setState({value: newText, cls: "valid"})
-      if (this.props.onChange)
-        this.props.onChange(null)
-    }
-    else if (date.isValid()) {
-      this.setState({value: newText, cls: "valid"})
-      if (this.props.onChange)
-        this.props.onChange(date.format('YYYY-MM-DD'))
-    }
-    else
-    {
-      this.setState({value: newText, cls: "is-invalid "})
-    }
+  textToValue(text) {
+    return text == '' ? null : moment(text, 'DD.MM.YYYY').format('YYYY-MM-DD')
   }
   onChangeCal(d) {
     const val = d.format('YYYY-MM-DD')
     const text = d.format('DD.MM.YYYY')
-    this.setState({value: text})
     if (this.props.onChange)
       this.props.onChange(val)
   }
@@ -66,9 +41,9 @@ class DateField extends Field {
       style: {display: 'inline-block'}
     }
     return (
-    <div>
+    <div style={{ width: '100%' }}>
       <nobr>
-      <RenderTextInput {...props}/>
+      { super.renderEdit() } 
       <button className="btn btn-primary" style={ {display: 'inline-block'} } onClick={(e) => this.onShowCalendar(e)}>...</button>
       </nobr>
       <MyModal width={340} show={this.state.showCalendar} onHide={this.onCalendarClose.bind(this)}>
