@@ -45,6 +45,15 @@ class SelectField extends Field {
       this.props.onChange(newValue)
   }
 
+  renderShow() {
+    let text = '\u00a0'
+    this.getOptionsInclEmpty().forEach((val) => {
+      if (val.key && val.key == this.props.value)
+        text = val.text
+    }) 
+    return <span>{text}</span>
+  }
+
   renderEdit() {
     return <RenderSelect onChange={this.handleOnChange.bind(this)} value={this.props.value} options={this.getOptionsInclEmpty() } />
   }

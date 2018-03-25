@@ -1,11 +1,12 @@
 import React from 'react'
 import {Field} from './Field'
 
-const RenderTextInput = ({invalid, onChange, value}) => {
+const RenderTextInput = ({invalid, style, onChange, value}) => {
   const validClass = invalid ? 'is-invalid' : ''
   const classNames = ('form-control ' + validClass).trim()
+  style = {...style, display: 'inline-block'}
   return (
-    <input type="text" style={ {display: 'inline-block'} } className={classNames} onChange={onChange} value={value ? value : ''}/>
+    <input type="text" style={ style } className={classNames} onChange={onChange} value={value ? value : ''}/>
   )
 }
 
@@ -66,12 +67,13 @@ class TextField extends Field {
       </span>
     )
   }
-  renderEdit() {
+  renderEdit(extraProps) {
     const props = {
       invalid: this.state.invalid,
       className: "form-control",
       onChange: this.onChange.bind(this),
-      value: this.state.value
+      value: this.state.value,
+      ...extraProps
     }
     return <RenderTextInput {...props}/>
   }
