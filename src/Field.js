@@ -14,7 +14,7 @@ class Field extends Component {
     )
   }
   render() {
-    if (this.props.edit)
+    if (this.props.edit && !this.props.readOnly)
       return this.renderEdit()
     else
       return this.renderShow()
