@@ -26,7 +26,7 @@ class Table extends Component {
         row: row,
         value: getAttribute(row, child.props.attr),
         onChange: (newValue) => this.changeAttribute(idx, child.props.attr, newValue),
-        edit: this.props.edit
+        edit: this.props.edit || child.props.edit
       })
     }.bind(this))
   }

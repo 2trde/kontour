@@ -5,5 +5,6 @@ import {IntField} from './IntField'
 import {FloatField} from './FloatField'
 import {DateField} from './DateField'
 import {SelectField} from './SelectField'
+import {CheckField} from './CheckField'
 
-export {Table, Form, TextField, IntField, FloatField, DateField, SelectField}
+export {Table, Form, TextField, IntField, FloatField, DateField, SelectField, CheckField}

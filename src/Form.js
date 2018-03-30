@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {getAttribute, setAttribute} from './ObjectHelper'
 
-const RenderFormElement = ({label, field}) => {
+let RenderFormElement = ({label, field}) => {
   return (
     <div className="form-group row">
       <label className="col-sm-2 col-form-label">{label}</label>
@@ -37,4 +37,4 @@ class Form extends Component {
   }
 }
 
-export {Form};
+export {Form, RenderFormElement};
