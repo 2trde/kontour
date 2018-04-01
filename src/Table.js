@@ -21,7 +21,7 @@ class Table extends Component {
   }
 
   childrenWithProps(row, idx) {
-    return React.Children.map(this.props.children, function(child) {
+    return React.Children.map(this.visibleChildren(), function(child) {
       return React.cloneElement(child, {
         row: row,
         value: getAttribute(row, child.props.attr),
@@ -29,6 +29,10 @@ class Table extends Component {
         edit: this.props.edit || child.props.edit
       })
     }.bind(this))
+  }
+
+  visibleChildren() {
+    return this.props.children
   }
 
   renderRow(obj, idx) {
@@ -65,7 +69,7 @@ class Table extends Component {
     let rows = this.renderRows()
     return (
       <table className="table">
-        <RenderTableHeader children={this.props.children}/>
+        <RenderTableHeader children={this.visibleChildren()}/>
         <tbody>
           { rows }
         </tbody>

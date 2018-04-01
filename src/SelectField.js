@@ -23,7 +23,12 @@ class SelectField extends Field {
 
   getOptions() {
     if (this.props.options) {
-      return this.props.options.map((opt) => { return {key: opt, text: opt} })
+      return this.props.options.map((opt) => {
+        if (typeof(opt) == 'string')
+          return {key: opt, text: opt}
+        else
+          return opt
+      })
     } else {
       return []
     }
