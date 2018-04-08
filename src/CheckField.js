@@ -5,12 +5,13 @@ const RenderCheckboxInput = ({style, onChange, value}) => {
   const classNames = ''
   style = {...style, display: 'inline-block'}
   return (
-    <input type="checkbox" style={ style } className={classNames} onChange={onChange} value={value ? value : ''}/>
+    <input type="checkbox" style={ style } className={classNames} onChange={onChange} checked={value ? value : ''}/>
   )
 }
 
 class CheckField extends Field {
   onChange(e) {
+    this.props.onChange(!this.props.value)
   }
   renderShow() {
     let text = this.props.value ? 'yes' : 'no'
