@@ -2,13 +2,18 @@ import React, { Component } from 'react';
 import moment from 'moment'
 import './Calendar.css';
 
+const buttonStyle = {
+  height: '30px',
+  width: '30px'
+}
+
 const YearSelector = ({value, onChange}) => {
   const goBack = () => onChange( value.clone().subtract(1, 'year'))
   const goForward = () => onChange( value.clone().add(1, 'year'))
   return <div className='year-selector'>
-    <button onClick={goBack}> &lt;  </button>
+    <button style={buttonStyle} onClick={goBack}> &lt;  </button>
       <span> { value.year() } </span>
-    <button onClick={goForward}> &gt; </button>
+    <button style={buttonStyle} onClick={goForward}> &gt; </button>
   </div>
 }
 
@@ -16,9 +21,9 @@ const MonthSelector = ({value, onChange}) => {
   const goBack = () => onChange( value.clone().subtract(1, 'months'))
   const goForward = () => onChange( value.clone().add(1, 'months'))
   return <div className='month-selector'>
-    <button onClick={goBack}> &lt;  </button>
+    <button style={buttonStyle} onClick={goBack}> &lt;  </button>
       <span> { value.format('MMMM') } </span>
-    <button onClick={goForward}> &gt; </button>
+    <button style={buttonStyle} onClick={goForward}> &gt; </button>
   </div>
 }
 
@@ -29,12 +34,37 @@ const Day = ({value, currentDay, onSelectDay}) => {
   else if (value.month() !== currentDay.month())
     className = 'day-other'
 
-  return <div key={'' + value.date() + '_' + value.month()}
+  return <div style={{flexGrow: 1}} key={'' + value.date() + '_' + value.month()}
     onClick={(e) => onSelectDay(value)}
     className={className}>
       {value.date()}
     </div>
 }
+
+function chunkArray(arr, chunkSize) {
+  let list = []
+  arr.forEach((el) => {
+    if (list.length == 0) list.push([])
+    if (list[list.length-1].length >= chunkSize)
+      list.push([])
+    list[list.length-1].push(el)
+  })
+  return list
+}
+
+
+const DaysRow = ({children, className}) => {
+  const rows = chunkArray(React.Children.toArray(children), 7)
+
+  return rows.map((row) => (
+    <div style={{display:'flex'}} className={className}>
+      { row.map(el => (
+        React.cloneElement(el, {style: {flexGrow: 1}})
+      ))}
+    </div>
+  ))
+}
+
 
 class Calendar extends Component {
   onSelectDay(day) {
@@ -92,10 +122,12 @@ class Calendar extends Component {
         <MonthSelector value={this.currentDate()} onChange={this.props.onChange}/>
         <YearSelector value={this.currentDate()} onChange={this.props.onChange}/>
       </div>
-      <div className="week-days">
+      <DaysRow className='week-days'>
         {weekDays.map((wday) => <div className="week-day" key={wday}>{wday}</div> )}
-      </div>
-      {days.map((d) => <Day key={''+d.date()+'_'+d.month()} value={d} currentDay={this.currentDate()} onSelectDay={(e) => this.onSelectDay(d)}/>)}
+      </DaysRow>
+      <DaysRow>
+        {days.map((d) => <Day key={''+d.date()+'_'+d.month()} value={d} currentDay={this.currentDate()} onSelectDay={(e) => this.onSelectDay(d)}/>)}
+      </DaysRow>
     </div>
   } 
 }

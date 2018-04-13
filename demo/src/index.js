@@ -2,8 +2,9 @@ import React, {Component} from 'react'
 import {render} from 'react-dom'
 import {Table} from '../../src'
 import {Form} from '../../src'
-import {CheckField, IntField, TextField, DateField, SelectField} from '../../src'
+import {CheckField, IntField, TextField, DateTimeField, DateField, SelectField} from '../../src'
 import moment from 'moment'
+import './index.css'
 
 class Demo extends Component {
   constructor(props) {
@@ -17,6 +18,8 @@ class Demo extends Component {
         model: "Golf",
         mileage: 90000,
         registration_date: '2008-08-01',
+        //end_ts: '2008-08-01T13:27:00',
+        end_ts: null,
         car_type: 'sedan',
         selected: false
       },
@@ -57,6 +60,7 @@ class Demo extends Component {
           <TextField label="Modell" attr="model" />
           <IntField label="Laufleistung" attr="mileage" />
           <DateField label="Erstzulassung" attr="registration_date" />
+          <DateTimeField label="Ende" attr="end_ts" />
           <SelectField label="Aufbauart" attr="car_type" options={['sedan', 'estate', 'convertible']}/>
           <CheckField label="Auswaehlen" attr="selected"/>
         </Form>
