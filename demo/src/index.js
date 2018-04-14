@@ -14,13 +14,13 @@ class Demo extends Component {
       day: moment(),
       auction: {
         id: 123,
-        maker: "Volkswagen",
+        maker: null,
         model: "Golf",
         mileage: 90000,
         registration_date: '2008-08-01',
         //end_ts: '2008-08-01T13:27:00',
         end_ts: null,
-        car_type: 'sedan',
+        car_type: null,
         selected: false
       },
       list: [
@@ -51,17 +51,17 @@ class Demo extends Component {
       <div className="container">
         <h1>Form example</h1>
         <Table edit={this.state.edit} value={this.state.list} onChange={(val) => this.setState({list: val})}>
-          <TextField label="Hersteller" attr="maker" />
+          <TextField label="Hersteller" attr="maker"/>
           <TextField label="Modell" attr="model" />
           <IntField label="Laufleistung" attr="mileage" />
         </Table>
         <Form edit={this.state.edit} value={this.state.auction} onChange={(val) => this.setState({auction: val})}>
-          <TextField label="Hersteller" attr="maker" />
+          <TextField label="Hersteller" attr="maker"  required={true} />
           <TextField label="Modell" attr="model" />
           <IntField label="Laufleistung" attr="mileage" />
           <DateField label="Erstzulassung" attr="registration_date" />
           <DateTimeField label="Ende" attr="end_ts" />
-          <SelectField label="Aufbauart" attr="car_type" options={['sedan', 'estate', 'convertible']}/>
+          <SelectField required={true} label="Aufbauart" attr="car_type" options={['sedan', 'estate', 'convertible']}/>
           <CheckField label="Auswaehlen" attr="selected"/>
         </Form>
         <button onClick={ () => this.setState({edit: !this.state.edit}) }>Toggle Edit</button>

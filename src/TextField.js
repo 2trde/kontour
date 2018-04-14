@@ -1,5 +1,6 @@
 import React from 'react'
 import {Field} from './Field'
+import PropTypes from 'prop-types'
 
 const RenderTextInput = ({invalid, style, onChange, value}) => {
   const validClass = invalid ? 'is-invalid' : ''
@@ -14,7 +15,7 @@ class TextField extends Field {
   constructor(props) {
     super(props)
     this.state = {
-      invalid: false,
+      invalid: this.props.required && !this.props.value,
       value: this.valueToText(props.value)
     }
   }
@@ -26,7 +27,7 @@ class TextField extends Field {
   onChange(e) {
     const text = e.target.value
     if (text == '') {
-      this.setState({value: text, invalid: false})
+      this.setState({value: text, invalid: this.props.required})
       if (this.props.onChange)
         this.props.onChange(null)
     }
@@ -77,6 +78,11 @@ class TextField extends Field {
     }
     return <RenderTextInput {...props}/>
   }
+}
+
+TextField.propTypes = {
+  value: PropTypes.string,
+  required: PropTypes.bool
 }
 
 export {RenderTextInput, TextField}

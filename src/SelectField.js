@@ -1,11 +1,13 @@
 import React from 'react'
 import {Field} from './Field'
 
-const RenderSelect = ({onChange, value, options}) => {
+const RenderSelect = ({invalid, onChange, value, options}) => {
+  const validClass = invalid ? 'is-invalid' : ''
+  const classNames = ('form-control ' + validClass).trim()
   return (
-    <select onChange={onChange} value={value || ''} className='form-control'>
+    <select onChange={onChange} value={value || ''} className={classNames}>
       {options.map((option) => {
-        return <option key={option.key} value={option.key}>{ option.text }</option>
+        return <option key={option.key} value={option.key} >{ option.text }</option>
       })}
     </select>
   )
@@ -14,11 +16,9 @@ const RenderSelect = ({onChange, value, options}) => {
 class SelectField extends Field {
   constructor(props) {
     super(props)
-  }
-
-  onChange(e) {
-    if (this.props.onChange)
-      this.props.onChange(this.textToValue(text))
+    this.state = {
+      invalid: this.props.required && !this.props.value
+    }
   }
 
   getOptions() {
@@ -35,19 +35,14 @@ class SelectField extends Field {
   }
 
   getOptionsInclEmpty() {
-    if (this.props.required) {
-      return this.getOptions()
-    } else {
-      return [{key: null, test: ""}].concat(this.getOptions())
-    }
+    return [{key: null, test: ""}].concat(this.getOptions())
   }
 
   handleOnChange(e) {
     const newValue = e.target.value == '' ? null : e.target.value
-    
-    console.log("select changed", newValue)
     if (this.props.onChange)
       this.props.onChange(newValue)
+    this.setState({invalid: this.props.required && !newValue}) 
   }
 
   renderShow() {
@@ -60,7 +55,7 @@ class SelectField extends Field {
   }
 
   renderEdit() {
-    return <RenderSelect onChange={this.handleOnChange.bind(this)} value={this.props.value} options={this.getOptionsInclEmpty() } />
+    return <RenderSelect invalid={this.state.invalid} onChange={this.handleOnChange.bind(this)} value={this.props.value} options={this.getOptionsInclEmpty() } />
   }
 }
 
