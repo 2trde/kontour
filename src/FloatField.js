@@ -1,5 +1,6 @@
 import React from 'react'
 import {TextField} from './TextField'
+import PropTypes from 'prop-types'
 
 class FloatField extends TextField {
   isValidText(value) {
@@ -15,6 +16,11 @@ class FloatField extends TextField {
       return ''
     return (''+value).replace('.', ',')
   }
+}
+
+FloatField.propTypes = {
+  value: PropTypes.number,
+  required: PropTypes.bool
 }
 
 export {FloatField}
