@@ -31,7 +31,7 @@ class Form extends Component {
     }.bind(this));
 
     return (
-      <form>
+      <form onSubmit={ (e) => { e.preventDefault() } }>
         {React.Children.map(childrenWithProps, (child) => { return this.renderFormElement(child) } ) }
       </form>
     )
