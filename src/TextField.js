@@ -82,7 +82,8 @@ class TextField extends Field {
 
 TextField.propTypes = {
   value: PropTypes.string,
-  required: PropTypes.bool
+  required: PropTypes.bool,
+  regex: PropTypes.object
 }
 
 export {RenderTextInput, TextField}

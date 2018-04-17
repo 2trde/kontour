@@ -11,6 +11,7 @@ const getAttributeRec = (obj, attrList) => {
 }
 
 const getAttribute = (obj, attrStr) => {
+  if (attrStr == null) return null
   const attrList = attrStr.split('.')
   return getAttributeRec(obj, attrList)
 }
