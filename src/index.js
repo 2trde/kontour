@@ -8,6 +8,7 @@ import {DateTimeField} from './DateTimeField'
 import {SelectField} from './SelectField'
 import {CheckField} from './CheckField'
 import {ObjectSelectField} from './ObjectSelectField'
+import {MyModal} from './MyModal'
 
 export {
   Table,
@@ -19,5 +20,6 @@ export {
   DateTimeField,
   SelectField,
   CheckField,
-  ObjectSelectField
+  ObjectSelectField,
+  MyModal
 }

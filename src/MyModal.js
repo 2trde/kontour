@@ -1,7 +1,7 @@
 import React from 'react';
 import {Modal} from 'react-overlays'
 
-const MyModal = ({show, onHide, width, children}) => {
+const MyModal = ({show, onHide, width, height, children}) => {
   const modalStyle = {
     position: 'fixed',
     zIndex: 1040,
@@ -20,6 +20,7 @@ const MyModal = ({show, onHide, width, children}) => {
     return {
       position: 'absolute',
       width: width,
+      height: height || 'inherit',
       top: top + '%', left: left + '%',
       transform: `translate(-${top}%, -${left}%)`,
       border: '1px solid #e5e5e5',

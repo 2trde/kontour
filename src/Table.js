@@ -20,12 +20,20 @@ class Table extends Component {
       this.props.onChange(newList)
   }
 
+  changeRow(idx, newRow) {
+    const newList = this.props.value.slice()
+    newList[idx] = newRow
+    if (this.props.onChange)
+      this.props.onChange(newList)
+  }
+
   childrenWithProps(row, idx) {
     return React.Children.map(this.visibleChildren(), function(child) {
       return React.cloneElement(child, {
         row: row,
         value: getAttribute(row, child.props.attr),
         onChange: (newValue) => this.changeAttribute(idx, child.props.attr, newValue),
+        onChangeRow: (newValue) => this.changeRow(idx, newValue),
         edit: this.props.edit || child.props.edit
       })
     }.bind(this))
