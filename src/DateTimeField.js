@@ -6,7 +6,7 @@ import TimeSelector from './TimeSelector'
 import {MyModal} from './MyModal'
 import moment from 'moment'
 
-const inputFormat = moment.defaultFormat //'YYYY-MM-DDTHH:mm:ss'
+const inputFormat = moment.defaultFormat // 'YYYY-MM-DDTHH:mm:ssZ'
 const displayFormat = 'DD.MM.YYYY HH:mm'
 
 class DateTimeField extends TextField {
@@ -26,10 +26,10 @@ class DateTimeField extends TextField {
     return date.isValid()
   }
   textToValue(text) {
-    return text == '' ? null : moment(text, displayFormat).format(inputFormat)
+    return text == '' ? null : moment(text, displayFormat).utc().format()
   }
   onChangeCal(d) {
-    const val = d.format(inputFormat)
+    const val = d.utc().format()
     if (this.props.onChange)
       this.props.onChange(val)
   }
@@ -48,7 +48,7 @@ class DateTimeField extends TextField {
     dateTime.minute(min)
 
     if (this.props.onChange)
-      this.props.onChange(dateTime.format(inputFormat))
+      this.props.onChange(dateTime.utc().format())
   }
   onShowCalendar(e) {
     this.setState({showCalendar: true})
