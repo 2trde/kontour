@@ -64,7 +64,7 @@ class DateTimeField extends TextField {
     <div style={{ display: 'inline-flex', width: '100%' }}>
       { super.renderEdit({style: {width: 'auto', flexGrow: 1}}) } 
       <button className="btn btn-primary" style={ {display: 'inline-block'} } onClick={(e) => this.onShowCalendar(e)}>...</button>
-      <MyModal width={525} show={this.state.showCalendar} onHide={this.onCalendarClose.bind(this)}>
+      <MyModal width='fit-content' show={this.state.showCalendar} onHide={this.onCalendarClose.bind(this)}>
         <div style={{display: 'flex'}}>
           <div style={{display: 'inline-block'}}>
             <Calendar value={dateTime} onChange={ (d) => this.onChangeCal(d)}/>
