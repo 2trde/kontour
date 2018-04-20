@@ -21,7 +21,7 @@ class Form extends Component {
     return <RenderFormElement field={child} label={child.props.label} />
   }
   render(children) {
-    const list = React.Children.toArray(this.props.children).filter((f) => f.props.visible == null || f.props.visible == true)
+    const list = React.Children.toArray(this.props.children).filter((f) => f.props && (f.props.visible == null || f.props.visible == true))
     let childrenWithProps = React.Children.map(list, function(child) {
       return React.cloneElement(child, {
         value: this.props.value ? getAttribute(this.props.value, child.props.attr) : null,

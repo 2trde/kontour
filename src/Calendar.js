@@ -56,9 +56,9 @@ function chunkArray(arr, chunkSize) {
 const DaysRow = ({children, className}) => {
   const rows = chunkArray(React.Children.toArray(children), 7)
 
-  return rows.map((row) => (
-    <div style={{display:'flex'}} className={className}>
-      { row.map(el => (
+  return rows.map((row, idx) => (
+    <div key={idx} style={{display:'flex'}} className={className}>
+      { row.map((el,i) => (
         React.cloneElement(el, {style: {flexGrow: 1}})
       ))}
     </div>
@@ -123,7 +123,7 @@ class Calendar extends Component {
         <YearSelector value={this.currentDate()} onChange={this.props.onChange}/>
       </div>
       <DaysRow className='week-days'>
-        {weekDays.map((wday) => <div className="week-day" key={wday}>{wday}</div> )}
+        {weekDays.map((wday) => <div key={wday} className="week-day" key={wday}>{wday}</div> )}
       </DaysRow>
       <DaysRow>
         {days.map((d) => <Day key={''+d.date()+'_'+d.month()} value={d} currentDay={this.currentDate()} onSelectDay={(e) => this.onSelectDay(d)}/>)}

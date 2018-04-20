@@ -55,8 +55,8 @@ export default class TimeSelector extends Component {
           <button style={buttonStyles} onClick={() => this.onChangePart(1, 5)}>+</button>
         </div>
         <div style={subContainerStyles}>
-          <input style={inputStyles} value={parts[0]}/>
-          <input style={inputStyles} value={parts[1]}/>
+          <input style={inputStyles} value={parts[0]} />
+          <input style={inputStyles} value={parts[1]} />
         </div>
         <div style={subContainerStyles}>
           <button style={buttonStyles} onClick={() => this.onChangePart(0, -1)}>-</button>

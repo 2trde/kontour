@@ -6,7 +6,7 @@ import TimeSelector from './TimeSelector'
 import {MyModal} from './MyModal'
 import moment from 'moment'
 
-const inputFormat = 'YYYY-MM-DDTHH:mm:ss'
+const inputFormat = moment.defaultFormat //'YYYY-MM-DDTHH:mm:ss'
 const displayFormat = 'DD.MM.YYYY HH:mm'
 
 class DateTimeField extends TextField {
@@ -33,11 +33,22 @@ class DateTimeField extends TextField {
     if (this.props.onChange)
       this.props.onChange(val)
   }
+
+  currentMoment() {
+    return this.props.value ? moment(this.props.value, inputFormat) : moment()
+  }
+
   onChangeTime(t) {
-    const dateTime = moment(this.props.value, inputFormat)
-    const newDate = dateTime.format('YYYY-MM-DD') + 'T' + t + ':00'
+    const timeParts = t.split(':')
+    const hour = parseInt(timeParts[0])
+    const min = parseInt(timeParts[1])
+
+    const dateTime = this.currentMoment()
+    dateTime.hour(hour)
+    dateTime.minute(min)
+
     if (this.props.onChange)
-      this.props.onChange(newDate)
+      this.props.onChange(dateTime.format(inputFormat))
   }
   onShowCalendar(e) {
     this.setState({showCalendar: true})
@@ -47,7 +58,7 @@ class DateTimeField extends TextField {
     this.setState({showCalendar: false})
   }
   renderEdit() {
-    const dateTime = this.props.value ? moment(this.props.value, inputFormat) : moment()
+    const dateTime = this.currentMoment()
     const time = dateTime.format('HH:mm')
     return (
     <div style={{ display: 'inline-flex', width: '100%' }}>
