@@ -2,12 +2,12 @@ import React from 'react'
 import {Field} from './Field'
 import PropTypes from 'prop-types'
 
-const RenderTextInput = ({invalid, style, onChange, value}) => {
+const RenderTextInput = ({invalid, errorText, style, onChange, value}) => {
   const validClass = invalid ? 'is-invalid' : ''
   const classNames = ('form-control ' + validClass).trim()
   style = {...style, display: 'inline-block'}
   return (
-    <input type="text" style={ style } className={classNames} onChange={onChange} value={value ? value : ''}/>
+    <input type="text" style={ style } title={errorText} className={classNames} onChange={onChange} value={value ? value : ''}/>
   )
 }
 
@@ -15,13 +15,14 @@ class TextField extends Field {
   constructor(props) {
     super(props)
     this.state = {
-      invalid: this.props.required && !this.props.value,
+      invalid: (this.props.required && !this.props.value),
       value: this.valueToText(props.value)
     }
   }
   componentWillReceiveProps(nextProps) {
-    if (nextProps.value !== this.props.value) {
-      this.setState({value: this.valueToText(nextProps.value)})
+    if (nextProps.value !== this.props.value || nextProps.error !== this.props.error) {
+      this.setState({value: this.valueToText(nextProps.value),
+                     invalid: this.props.required && !nextProps.value})
     }
   }
   onChange(e) {
@@ -70,7 +71,8 @@ class TextField extends Field {
   }
   renderEdit(extraProps) {
     const props = {
-      invalid: this.state.invalid,
+      invalid: this.props.error || this.state.invalid,
+      errorText: this.props.error ? this.props.error.join(', ') : '',
       className: "form-control",
       onChange: this.onChange.bind(this),
       value: this.state.value,
@@ -83,7 +85,8 @@ class TextField extends Field {
 TextField.propTypes = {
   value: PropTypes.string,
   required: PropTypes.bool,
-  regex: PropTypes.object
+  regex: PropTypes.object,
+  error: PropTypes.string
 }
 
 export {RenderTextInput, TextField}

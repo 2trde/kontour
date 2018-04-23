@@ -17,7 +17,7 @@ describe('DateTimeField', () => {
 
 
   it('renders a date in display mode', () => {
-    const wrapper = mount(<DateTimeField edit={false} value={'2014-05-11T13:30:15Z'}/>)
+    const wrapper = mount(<DateTimeField edit={false} value='2014-05-11T13:30:15Z'/>)
     expect(wrapper.find('span').text()).toEqual('11.05.2014 15:30')
   });
 

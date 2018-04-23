@@ -6,14 +6,26 @@ const divider = [
   24,
   60
 ]
+const maxVal = [
+  24,
+  60
+]
 
-export default class TimeSelector extends Component {
+class TimeSelector extends Component {
   onChangePart(idx, delta) {
-    const parts = this.props.value.split(":")
-    const part = parseInt(parts[idx])
-    const newVal = (part + delta) % divider[idx]
-    const newValTxt = newVal < 10 ? '0' + newVal : '' + newVal     
-    parts[idx] = newValTxt
+    let parts = this.props.value.split(":").map((s) => parseInt(s))
+    let newVal = (parts[idx] + delta)
+
+    if (newVal >= maxVal[idx]) {
+      newVal = newVal % maxVal[idx]
+      if (idx == 1) parts[0] = parts[0] + 1
+    }
+    if (newVal < 0) {
+      newVal = newVal + maxVal[idx]
+      if (idx == 1) parts[0] = parts[0] - 1
+    }
+    parts[idx] = newVal
+    parts = parts.map(v => v < 10 ? '0' + v : '' + v)
     const newValue = parts.join(':')
     if (this.props.onChange)
       this.props.onChange(newValue)
@@ -51,16 +63,16 @@ export default class TimeSelector extends Component {
     return (
       <div style={ containerStyles }>
         <div style={subContainerStyles}>
-          <button style={buttonStyles} onClick={() => this.onChangePart(0, 1)}>+</button>
-          <button style={buttonStyles} onClick={() => this.onChangePart(1, 5)}>+</button>
+          <button className='incHour' style={buttonStyles} onClick={() => this.onChangePart(0, 1)}>+</button>
+          <button className='incMin' style={buttonStyles} onClick={() => this.onChangePart(1, 5)}>+</button>
         </div>
         <div style={subContainerStyles}>
-          <input style={inputStyles} value={parts[0]} />
-          <input style={inputStyles} value={parts[1]} />
+          <input style={inputStyles} value={parts[0]} readOnly/>
+          <input style={inputStyles} value={parts[1]} readOnly/>
         </div>
         <div style={subContainerStyles}>
-          <button style={buttonStyles} onClick={() => this.onChangePart(0, -1)}>-</button>
-          <button style={buttonStyles} onClick={() => this.onChangePart(1, -5)}>-</button>
+          <button className='decHour' style={buttonStyles} onClick={() => this.onChangePart(0, -1)}>-</button>
+          <button className='decMin' style={buttonStyles} onClick={() => this.onChangePart(1, -5)}>-</button>
         </div>
       </div>
     )  
@@ -71,3 +83,6 @@ TimeSelector.propTypes = {
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired
 }
+
+export {TimeSelector}
+

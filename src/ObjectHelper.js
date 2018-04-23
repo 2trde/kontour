@@ -5,7 +5,7 @@ const getAttributeRec = (obj, attrList) => {
   }
   else
   {
-    const val = obj[attrList[0]]
+    const val = obj ? obj[attrList[0]] : null
     return val 
   }
 }

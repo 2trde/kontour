@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {getAttribute, setAttribute} from './ObjectHelper'
+import PropTypes from 'prop-types'
 
 let RenderFormElement = ({label, field}) => {
   return (
@@ -23,10 +24,13 @@ class Form extends Component {
   render(children) {
     const list = React.Children.toArray(this.props.children).filter((f) => f.props && (f.props.visible == null || f.props.visible == true))
     let childrenWithProps = React.Children.map(list, function(child) {
+      const error = this.props.errors ? getAttribute(this.props.errors, child.props.attr) : null
+
       return React.cloneElement(child, {
         value: this.props.value ? getAttribute(this.props.value, child.props.attr) : null,
-        onChange: (newValue) =>  this.changeAttribute(child.props.attr, newValue),
-        edit: this.props.edit
+        onChange: (newValue) => this.changeAttribute(child.props.attr, newValue),
+        edit: this.props.edit,
+        error: error
       })
     }.bind(this));
 
@@ -36,6 +40,13 @@ class Form extends Component {
       </form>
     )
   }
+}
+
+Form.propTypes = {
+  value: PropTypes.object,
+  edit: PropTypes.bool,
+  onChange: PropTypes.func,
+  errors: PropTypes.object
 }
 
 export {Form, RenderFormElement};

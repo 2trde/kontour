@@ -45,8 +45,9 @@ class Table extends Component {
 
   renderRow(obj, idx) {
     return React.Children.map(this.childrenWithProps(obj, idx), (child) => {
+      const onclick = (child.props.attr) ? (() => this.handleClickRow(obj, idx)) : (() => null)
       return (
-        <td key={idx}>
+        <td key={idx} onClick={onclick}>
           {child}
         </td>
       )
@@ -65,7 +66,7 @@ class Table extends Component {
     return (
       this.props.value.map((row, idx) => {
         return (
-          <tr key={row.id} onClick={() => this.handleClickRow(row, idx) }>
+          <tr key={row.id}>
             {this.renderRow(row, idx)}
           </tr>
         )

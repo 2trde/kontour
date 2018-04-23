@@ -2,7 +2,7 @@ import React from 'react'
 import {TextField} from './TextField'
 import {RenderTextInput} from './TextField'
 import Calendar from './Calendar'
-import TimeSelector from './TimeSelector'
+import {TimeSelector} from './TimeSelector'
 import {MyModal} from './MyModal'
 import moment from 'moment'
 

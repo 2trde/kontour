@@ -45,4 +45,12 @@ describe('TextField', () => {
       )
     ).toBeTruthy()
   });
+
+  it('empty required field, enter value, it should be valid now', () => {
+    const mockOnChange = sinon.spy();
+    const wrapper = mount(<TextField edit={true} required={true} value={null} onChange={mockOnChange}/>)
+    expect(wrapper.find('input').hasClass('is-invalid')).toEqual(true)
+    wrapper.setProps({value: 'foo'})
+    expect(wrapper.find('input').hasClass('is-invalid')).toEqual(false)
+  });
 })
