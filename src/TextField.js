@@ -2,12 +2,12 @@ import React from 'react'
 import {Field} from './Field'
 import PropTypes from 'prop-types'
 
-const RenderTextInput = ({invalid, errorText, style, onChange, value}) => {
+const RenderTextInput = ({invalid, errorText, style, onChange, value, disabled}) => {
   const validClass = invalid ? 'is-invalid' : ''
   const classNames = ('form-control ' + validClass).trim()
   style = {...style, display: 'inline-block'}
   return (
-    <input type="text" style={ style } title={errorText} className={classNames} onChange={onChange} value={value ? value : ''}/>
+    <input type="text" style={ style } title={errorText} className={classNames} onChange={onChange} value={value ? value : ''} disabled={disabled}/>
   )
 }
 
@@ -26,7 +26,12 @@ class TextField extends Field {
     }
   }
   onChange(e) {
-    const text = e.target.value
+    let text = e.target.value
+
+    if (this.props.onTransformInput) {
+      text = this.props.onTransformInput(text) 
+    }
+
     if (text == '') {
       this.setState({value: text, invalid: this.props.required})
       if (this.props.onChange)
@@ -64,7 +69,7 @@ class TextField extends Field {
     if (text.trim() == '')
       text = "\u00A0"
     return (
-      <span>
+      <span className={ this.props.error ? 'is-invalid' : '' } hint={this.props.error ? this.props.error.join(', ') : null}>
         {text}
       </span>
     )
@@ -76,6 +81,7 @@ class TextField extends Field {
       className: "form-control",
       onChange: this.onChange.bind(this),
       value: this.state.value,
+      disabled: this.props.readOnly,
       ...extraProps
     }
     return <RenderTextInput {...props}/>
@@ -86,7 +92,8 @@ TextField.propTypes = {
   value: PropTypes.string,
   required: PropTypes.bool,
   regex: PropTypes.object,
-  error: PropTypes.string
+  error: PropTypes.string,
+  onTransformInput: PropTypes.func
 }
 
 export {RenderTextInput, TextField}

@@ -1,11 +1,11 @@
 import React from 'react'
 import {Field} from './Field'
 
-const RenderSelect = ({invalid, onChange, value, options}) => {
+const RenderSelect = ({invalid, onChange, value, options, disabled}) => {
   const validClass = invalid ? 'is-invalid' : ''
   const classNames = ('form-control ' + validClass).trim()
   return (
-    <select onChange={onChange} value={value || ''} className={classNames}>
+    <select onChange={onChange} value={value || ''} className={classNames} disabled={disabled}>
       {options.map((option) => {
         return <option key={option.key} value={option.key} >{ option.text }</option>
       })}
@@ -55,7 +55,11 @@ class SelectField extends Field {
   }
 
   renderEdit() {
-    return <RenderSelect invalid={this.state.invalid} onChange={this.handleOnChange.bind(this)} value={this.props.value} options={this.getOptionsInclEmpty() } />
+    return <RenderSelect invalid={this.state.invalid}
+                         onChange={this.handleOnChange.bind(this)}
+                         value={this.props.value}
+                         options={this.getOptionsInclEmpty() }
+                         disable={this.props.readOnly}/>
   }
 }
 

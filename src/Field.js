@@ -8,13 +8,13 @@ class Field extends Component {
     if (text.trim() == '')
       text = "\u00A0"
     return (
-      <span>
+      <span className={ this.props.error ? 'is-invalid' : '' } hint={this.props.error ? this.props.error.join(', ') : null}>
         {text}
       </span>
     )
   }
   render() {
-    if (this.props.edit && !this.props.readOnly)
+    if (this.props.edit)
       return this.renderEdit()
     else
       return this.renderShow()
