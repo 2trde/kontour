@@ -69,7 +69,7 @@ class TextField extends Field {
     if (text.trim() == '')
       text = "\u00A0"
     return (
-      <span className={ this.props.error ? 'is-invalid' : '' } hint={this.props.error ? this.props.error.join(', ') : null}>
+      <span className={ this.props.error ? 'is-invalid' : '' } hint={this.props.error ? this.props.error.join(', ') : this.props.error}>
         {text}
       </span>
     )

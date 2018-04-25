@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import {getAttribute, setAttribute} from './ObjectHelper'
+import PropTypes from 'prop-types'
 
 const RenderTableHeader = ({children}) => {
   return (
@@ -28,13 +29,17 @@ class Table extends Component {
   }
 
   childrenWithProps(row, idx) {
+    const errors = this.props.errors
     return React.Children.map(this.visibleChildren(), function(child) {
+      const errorObj = errors ? errors[idx] : {}
+      const error = getAttribute(errorObj, child.props.attr)
       return React.cloneElement(child, {
         row: row,
         value: getAttribute(row, child.props.attr),
         onChange: (newValue) => this.changeAttribute(idx, child.props.attr, newValue),
         onChangeRow: (newValue) => this.changeRow(idx, newValue),
-        edit: this.props.edit || child.props.edit
+        edit: this.props.edit || child.props.edit,
+        error: error
       })
     }.bind(this))
   }
@@ -85,6 +90,13 @@ class Table extends Component {
       </table>
     )
   }
+}
+
+Table.propTypes = {
+  value: PropTypes.array,
+  edit: PropTypes.bool,
+  onChange: PropTypes.func,
+  errors: PropTypes.array
 }
 
 export {Table};
