@@ -5,12 +5,12 @@ import PropTypes from 'prop-types'
 const RenderMultiSelect = ({invalid, onChange, value, options, disabled}) => {
   const validClass = invalid ? 'is-invalid' : ''
   return (
-    <ul>
+    <ul style={{listStyleType: 'none', '-webkit-padding-start': 0}}>
       {options.map((option) => (
-        <li>
+        <li key={option.id}>
           <input type='checkbox' key={option.id}
                  checked={option.selected}
-                 onChange={({target: {value}}) => onChange(option, value) }/>
+                 onChange={() => onChange(option) }/>
           { option.text }
         </li>
       ))}
@@ -22,23 +22,23 @@ class MultiSelectField extends Field {
   constructor(props) {
     super(props)
     this.state = {
-      invalid: this.props.required && (this.props.value == null || this.props.value.length == 0)
+      invalid: this.props.required && (this.props.value == null || this.props.value.length === 0)
     }
   }
 
   isOptionSelected(option) {
     if (!this.props.value) return false
     return this.props.value.filter(val => {
-      return (val == option)
+      return (this.props.keyFun(val) === this.props.keyFun(option))
     }).length > 0
   }
 
   getOptions() {
     return this.props.options.map((opt, i) => {
       return {
-        text: opt,
+        text: this.props.textFun(opt),
         selected: this.isOptionSelected(opt), 
-        id: i,
+        id: this.props.keyFun(opt),
         value: opt
       }
     })
@@ -55,7 +55,7 @@ class MultiSelectField extends Field {
   }
 
   renderShow() {
-    let text = '\u00a0'
+    if (!this.props.options) return ''
     const optionsSelected =
       this.getOptions()
       .filter(opt => opt.selected)
@@ -64,7 +64,8 @@ class MultiSelectField extends Field {
   }
 
   renderEdit() {
-    return <RenderMultiSelect invalid={this.state.invalid}
+    if (!this.props.options) return ''
+    return <this.props.renderer invalid={this.state.invalid}
                          onChange={this.handleOnChange.bind(this)}
                          value={this.props.value}
                          options={this.getOptions() }
@@ -72,9 +73,18 @@ class MultiSelectField extends Field {
   }
 }
 
+MultiSelectField.defaultProps = {
+  renderer: RenderMultiSelect,
+  keyFun: (val) => val,
+  textFun: (val) => val
+}
+
 MultiSelectField.propTypes = {
+  renderer: PropTypes.func,
   value: PropTypes.array,
-  options: PropTypes.array.isRequired
+  options: PropTypes.array.isRequired,
+  textFun: PropTypes.func,
+  keyFun: PropTypes.func
 }
 
 export {MultiSelectField}
