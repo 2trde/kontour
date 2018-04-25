@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {render} from 'react-dom'
 import {Table} from '../../src'
 import {Form} from '../../src'
-import {CheckField, IntField, TextField, DateTimeField, DateField, SelectField} from '../../src'
+import {CheckField, IntField, TextField, MultiSelectField, DateTimeField, DateField, SelectField} from '../../src'
 import moment from 'moment'
 import './index.css'
 
@@ -21,7 +21,8 @@ class Demo extends Component {
         //end_ts: '2008-08-01T13:27:00',
         end_ts: null,
         car_type: null,
-        selected: false
+        selected: false,
+        multiSelect: ['foo']
       },
       list: [
         {
@@ -63,6 +64,7 @@ class Demo extends Component {
           <DateTimeField label="Ende" attr="end_ts" />
           <SelectField required={true} label="Aufbauart" attr="car_type" options={['sedan', 'estate', 'convertible']}/>
           <CheckField label="Auswaehlen" attr="selected"/>
+          <MultiSelectField attr='multiSelect' label='MultiSelect' options={['foo', 'bar', 'bla']}/>
         </Form>
         <button onClick={ () => this.setState({edit: !this.state.edit}) }>Toggle Edit</button>
       </div>

@@ -9,6 +9,7 @@ import {TimeSelector} from './TimeSelector'
 import {SelectField} from './SelectField'
 import {CheckField} from './CheckField'
 import {ObjectSelectField} from './ObjectSelectField'
+import {MultiSelectField} from './MultiSelectField'
 import {MyModal} from './MyModal'
 
 export {
@@ -22,6 +23,7 @@ export {
   SelectField,
   CheckField,
   ObjectSelectField,
+  MultiSelectField,
   MyModal,
   TimeSelector
 }
