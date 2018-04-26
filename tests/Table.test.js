@@ -33,4 +33,26 @@ describe('Table', () => {
     wrapper.find('input').simulate('change', { target: { value: 'bar2' }})
     expect(mockOnChange.args[0][0]).toEqual([{foo: {foo2: "bar2"}}]);
   });
+
+  it('table will fill fields even if they aint in the initial data', () => {
+    const mockOnChange = sinon.spy();
+    const wrapper = mount(
+      <Table edit={true} value={[{}]} onChange={mockOnChange}>
+        <TextField attr='myfield' label='foo'/>
+      </Table>
+    )
+    wrapper.find('input').simulate('change', { target: { value: 'Bar' }})
+    expect(mockOnChange.args[0][0]).toEqual([{myfield: 'Bar'}]);
+  })
+
+  it('weird bug, adding an error removes the content', () => {
+    const mockOnChange = sinon.spy();
+    const wrapper = mount(
+      <Table edit={true} value={[{}]} onChange={mockOnChange}>
+        <TextField attr='myfield' label='foo'/>
+      </Table>
+    )
+    wrapper.find('input').simulate('change', { target: { value: 'Bar' }})
+    expect(mockOnChange.args[0][0]).toEqual([{myfield: 'Bar'}]);
+  })
 })

@@ -53,4 +53,13 @@ describe('TextField', () => {
     wrapper.setProps({value: 'foo'})
     expect(wrapper.find('input').hasClass('is-invalid')).toEqual(false)
   });
+
+  it('find bug', () => {
+    const mockOnChange = sinon.spy();
+    const wrapper = mount(<TextField edit={true} value={null} onChange={mockOnChange}/>)
+    wrapper.setProps({value: 'foo'})
+    wrapper.setProps({error: ['bad things happened']})
+    expect(wrapper.find('input').props().value).toEqual('foo')
+  })
+
 })

@@ -48,6 +48,12 @@ describe('ObjectHelper', () => {
       expect(obj.bla.peng).toBe('boom')
       expect(newObj.bla.peng).toBe('bam')
     });
+    it('write attributes that were missing b4', () => {
+      const obj = {
+      }
+      const newObj = setAttribute(obj, 'foo', 'bar')
+      expect(newObj.foo).toBe('bar')
+    });
   })
 })
 

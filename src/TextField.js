@@ -20,9 +20,10 @@ class TextField extends Field {
     }
   }
   componentWillReceiveProps(nextProps) {
-    if (nextProps.value !== this.props.value || nextProps.error !== this.props.error) {
-      this.setState({value: this.valueToText(nextProps.value),
-                     invalid: this.props.required && !nextProps.value})
+    if (nextProps.value !== this.props.value) {
+      const newState = {value: this.valueToText(nextProps.value),
+                     invalid: this.props.required && !nextProps.value}
+      this.setState(newState)
     }
   }
   onChange(e) {
@@ -88,12 +89,20 @@ class TextField extends Field {
   }
 }
 
+TextField.defaultProps = {
+  required: false,
+  readOnly: false,
+  regex: null,
+  error: null
+}
+
 TextField.propTypes = {
   value: PropTypes.string,
   required: PropTypes.bool,
   regex: PropTypes.object,
   error: PropTypes.string,
-  onTransformInput: PropTypes.func
+  onTransformInput: PropTypes.func,
+  readOnly: PropTypes.bool
 }
 
 export {RenderTextInput, TextField}

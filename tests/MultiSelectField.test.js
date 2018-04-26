@@ -18,8 +18,8 @@ describe('MultiSelectField', () => {
   it('renders selected options in edit mode', () => {
     const options = ['foo', 'bar', 'poo']
     const selected = ['foo', 'bar']
-    const json = renderer.create(<MultiSelectField edit={true} value={selected} options={options}/>).toJSON()
-    // expect(json).toMatchSnapshot();
+    const wrapper = mount(<MultiSelectField edit={true} value={selected} options={options}/>)
+    //expect(wrapper.debug()).toEqual('');
     // how to test the input-fields
   });
 })

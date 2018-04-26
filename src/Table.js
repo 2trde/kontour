@@ -19,6 +19,8 @@ class Table extends Component {
     newList[idx] = newValue
     if (this.props.onChange)
       this.props.onChange(newList)
+    else
+      throw Error('forgot to implement onChange on your table?')
   }
 
   changeRow(idx, newRow) {
@@ -26,6 +28,8 @@ class Table extends Component {
     newList[idx] = newRow
     if (this.props.onChange)
       this.props.onChange(newList)
+    else
+      throw Error('forgot to implement onChange on your table?')
   }
 
   childrenWithProps(row, idx) {
