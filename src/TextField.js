@@ -2,12 +2,12 @@ import React from 'react'
 import {Field} from './Field'
 import PropTypes from 'prop-types'
 
-const RenderTextInput = ({invalid, errorText, style, onChange, value, disabled}) => {
+const RenderTextInput = ({invalid, errorText, style, onChange, value, disabled, isPassword}) => {
   const validClass = invalid ? 'is-invalid' : ''
   const classNames = ('form-control ' + validClass).trim()
   style = {...style, display: 'inline-block'}
   return (
-    <input type="text" style={ style } title={errorText} className={classNames} onChange={onChange} value={value ? value : ''} disabled={disabled}/>
+    <input type={isPassword ? 'password' : 'text'} style={ style } title={errorText} className={classNames} onChange={onChange} value={value ? value : ''} disabled={disabled}/>
   )
 }
 
@@ -83,6 +83,7 @@ class TextField extends Field {
       onChange: this.onChange.bind(this),
       value: this.state.value,
       disabled: this.props.readOnly,
+      isPassword: this.props.isPassword,
       ...extraProps
     }
     return <RenderTextInput {...props}/>
@@ -93,7 +94,8 @@ TextField.defaultProps = {
   required: false,
   readOnly: false,
   regex: null,
-  error: null
+  error: null,
+  isPassword: false
 }
 
 TextField.propTypes = {
@@ -102,7 +104,8 @@ TextField.propTypes = {
   regex: PropTypes.object,
   error: PropTypes.string,
   onTransformInput: PropTypes.func,
-  readOnly: PropTypes.bool
+  readOnly: PropTypes.bool,
+  isPassword: PropTypes.bool
 }
 
 export {RenderTextInput, TextField}

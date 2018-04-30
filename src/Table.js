@@ -4,11 +4,11 @@ import PropTypes from 'prop-types'
 
 const RenderTableHeader = ({children}) => {
   return (
-    <tbody>
+    <thead>
       <tr>
         {React.Children.map(children, (child, idx) => <th key={idx}>{child.props.label}</th>)}
       </tr>
-    </tbody>
+    </thead>
   )
 }
 
@@ -69,13 +69,23 @@ class Table extends Component {
     }
   }
 
+  handleOnMouseEnter(e, row) {
+  }
+
+  handleOnMouseLeave(e, row) {
+  }
+
+  handleOnMouseMove(e, row) {
+  }
+
   renderRows() {
     if (this.props.value == null)
       return null
     return (
       this.props.value.map((row, idx) => {
         return (
-          <tr key={row.id}>
+          <tr key={row.id} onMouseEnter={(e) => this.handleOnMouseEnter(e, row)} onMouseLeave={(e) => this.handleOnMouseLeave(e, row)}
+                            onMouseMove={(e) => this.handleOnMouseMove(e, row)}>
             {this.renderRow(row, idx)}
           </tr>
         )
@@ -87,7 +97,7 @@ class Table extends Component {
     let rows = this.renderRows()
     return (
       <table className="table">
-        <RenderTableHeader children={this.visibleChildren()}/>
+        <this.props.renderTableHeader children={this.visibleChildren()}/>
         <tbody>
           { rows }
         </tbody>
@@ -96,7 +106,12 @@ class Table extends Component {
   }
 }
 
+Table.defaultProps = {
+  renderTableHeader: RenderTableHeader 
+}
+
 Table.propTypes = {
+  renderTableHeader: PropTypes.func,
   value: PropTypes.array,
   edit: PropTypes.bool,
   onChange: PropTypes.func,

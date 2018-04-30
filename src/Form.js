@@ -21,8 +21,11 @@ class Form extends Component {
   renderFormElement(child) {
     return <RenderFormElement field={child} label={child.props.label} />
   }
-  render(children) {
+  render() {
+    if (!this.props.value) return ''
     const list = React.Children.toArray(this.props.children).filter((f) => f.props && (f.props.visible == null || f.props.visible == true))
+                 .filter(child => !child.props.cond || child.props.cond(this.props.value))
+
     let childrenWithProps = React.Children.map(list, function(child) {
       const error = this.props.errors ? getAttribute(this.props.errors, child.props.attr) : null
 
