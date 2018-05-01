@@ -46,6 +46,9 @@ class DateField extends TextField {
       <button className="btn btn-primary" style={ {display: 'inline-block'} } onClick={(e) => this.onShowCalendar(e)}>...</button>
       <MyModal width={340} show={this.state.showCalendar} onHide={this.onCalendarClose.bind(this)}>
         <Calendar value={date} onChange={ (d) => this.onChangeCal(d)}/>
+        <div style={{textAlign: 'right'}}>
+          <button onClick={this.onCalendarClose.bind(this)}>übernehmen</button>
+        </div>
       </MyModal>
     </div>)
   }

@@ -73,6 +73,9 @@ class DateTimeField extends TextField {
             <TimeSelector value={time} onChange={ (t) => this.onChangeTime(t)}/>
           </div>
         </div>
+        <div style={{textAlign: 'right'}}>
+          <button onClick={this.onCalendarClose.bind(this)}>übernehmen</button>
+        </div>
       </MyModal>
     </div>)
   }
