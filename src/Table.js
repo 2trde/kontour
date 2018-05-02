@@ -34,7 +34,7 @@ class Table extends Component {
 
   childrenWithProps(row, idx) {
     const errors = this.props.errors
-    return React.Children.map(this.visibleChildren(), function(child) {
+    return React.Children.map(this.visibleChildren(), (child) => {
       const errorObj = errors ? errors[idx] : {}
       const error = getAttribute(errorObj, child.props.attr)
       return React.cloneElement(child, {
@@ -45,11 +45,11 @@ class Table extends Component {
         edit: this.props.edit || child.props.edit,
         error: error
       })
-    }.bind(this))
+    })
   }
 
   visibleChildren() {
-    return this.props.children
+    return React.Children.toArray(this.props.children).filter(child => !child.props.cond || child.props.cond())
   }
 
   renderRow(obj, idx) {
