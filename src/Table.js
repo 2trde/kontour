@@ -2,11 +2,13 @@ import React, { Component } from 'react'
 import {getAttribute, setAttribute} from './ObjectHelper'
 import PropTypes from 'prop-types'
 
-const RenderTableHeader = ({children}) => {
+const RenderTableHeader = ({children, onHeaderClick}) => {
+  const clickHandler = onHeaderClick || (() => {})
+  const style = onHeaderClick ? {cursor: 'pointer'} : {}
   return (
     <thead>
       <tr>
-        {React.Children.map(children, (child, idx) => <th key={idx}>{child.props.label}</th>)}
+        {React.Children.map(children, (child, idx) => <th key={idx} style={style} onClick={() => clickHandler(child.props.attr)}>{child.props.label}</th>)}
       </tr>
     </thead>
   )
@@ -55,8 +57,9 @@ class Table extends Component {
   renderRow(obj, idx) {
     return React.Children.map(this.childrenWithProps(obj, idx), (child) => {
       const onclick = (child.props.attr) ? (() => this.handleClickRow(obj, idx)) : (() => null)
+      const style = this.props.onRowClick ? {cursor: 'pointer'} : {}
       return (
-        <td key={idx} onClick={onclick}>
+        <td key={idx} onClick={onclick} style={style}>
           {child}
         </td>
       )
@@ -78,6 +81,11 @@ class Table extends Component {
   handleOnMouseMove(e, row) {
   }
 
+  handleHeaderClick(attr) {
+    if (this.props.onHeaderClick)
+      this.props.onHeaderClick(attr)
+  }
+
   renderRows() {
     if (this.props.value == null)
       return null
@@ -97,7 +105,7 @@ class Table extends Component {
     let rows = this.renderRows()
     return (
       <table className="table">
-        <this.props.renderTableHeader children={this.visibleChildren()}/>
+        <this.props.renderTableHeader children={this.visibleChildren()} onHeaderClick={this.props.onHeaderClick}/>
         <tbody>
           { rows }
         </tbody>
@@ -115,7 +123,8 @@ Table.propTypes = {
   value: PropTypes.array,
   edit: PropTypes.bool,
   onChange: PropTypes.func,
-  errors: PropTypes.array
+  errors: PropTypes.array,
+  onRowClick: PropTypes.func
 }
 
 export {Table};
