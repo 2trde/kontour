@@ -52,8 +52,11 @@ class TextField extends Field {
     return '' + value
   }
   isValidText(text) {
-    if (this.props.regex) {
-      return text.match(this.props.regex) 
+    if (this.props.regex && !text.match(this.props.regex)) {
+      return false 
+    }
+    if (this.props.maxLength && text.length > this.props.maxLength) {
+      return false 
     }
     return true
   }
@@ -105,7 +108,8 @@ TextField.propTypes = {
   error: PropTypes.string,
   onTransformInput: PropTypes.func,
   readOnly: PropTypes.bool,
-  isPassword: PropTypes.bool
+  isPassword: PropTypes.bool,
+  maxLength: PropTypes.number
 }
 
 export {RenderTextInput, TextField}
