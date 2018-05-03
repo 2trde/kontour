@@ -14,7 +14,9 @@ const maxVal = [
 class TimeSelector extends Component {
   onChangePart(idx, delta) {
     let parts = this.props.value.split(":").map((s) => parseInt(s))
-    let newVal = (parts[idx] + delta)
+
+    let newVal = Math.round(parts[idx] / Math.abs(delta)) * Math.abs(delta)
+    newVal = (newVal + delta)
 
     if (newVal >= maxVal[idx]) {
       newVal = newVal % maxVal[idx]
@@ -64,7 +66,7 @@ class TimeSelector extends Component {
       <div style={ containerStyles }>
         <div style={subContainerStyles}>
           <button className='incHour' style={buttonStyles} onClick={() => this.onChangePart(0, 1)}>+</button>
-          <button className='incMin' style={buttonStyles} onClick={() => this.onChangePart(1, 5)}>+</button>
+          <button className='incMin' style={buttonStyles} onClick={() => this.onChangePart(1, this.props.minDelta)}>+</button>
         </div>
         <div style={subContainerStyles}>
           <input style={inputStyles} value={parts[0]} readOnly/>
@@ -72,16 +74,21 @@ class TimeSelector extends Component {
         </div>
         <div style={subContainerStyles}>
           <button className='decHour' style={buttonStyles} onClick={() => this.onChangePart(0, -1)}>-</button>
-          <button className='decMin' style={buttonStyles} onClick={() => this.onChangePart(1, -5)}>-</button>
+          <button className='decMin' style={buttonStyles} onClick={() => this.onChangePart(1, -this.props.minDelta)}>-</button>
         </div>
       </div>
     )  
   }
 }
 
+TimeSelector.defaultProps = {
+  minDelta: 15
+}
+
 TimeSelector.propTypes = {
   value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
+  minDelta: PropTypes.number
 }
 
 export {TimeSelector}
