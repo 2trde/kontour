@@ -49,7 +49,7 @@ class TextField extends Field {
   valueToText(value) {
     if (value == null)
       return ''
-    return value
+    return '' + value
   }
   isValidText(text) {
     if (this.props.regex) {

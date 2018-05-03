@@ -49,4 +49,13 @@ describe('IntField', () => {
     wrapper.find('input').simulate('change', { target: { value: '' }})
     expect(mockOnChange.withArgs(null)).toExist();
   });
+  it('change 100 to 00', () => {
+    const mockOnChange = sinon.spy();
+    const wrapper = mount(<IntField edit={true} value={'100'} onChange={mockOnChange}/>)
+    wrapper.find('input').simulate('change', { target: { value: '00' }})
+    expect(mockOnChange.withArgs(0)).toExist();
+    wrapper.setProps({value: 0})
+    expect(wrapper.find('input').prop('className')).toBe('form-control')
+    expect(wrapper.find('input').prop('value')).toBe('0')
+  });
 })
