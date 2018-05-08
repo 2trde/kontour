@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 const RenderMultiSelect = ({invalid, onChange, value, options, disabled}) => {
   const validClass = invalid ? 'is-invalid' : ''
   return (
-    <ul style={{listStyleType: 'none', '-webkit-padding-start': 0}}>
+    <ul style={{listStyleType: 'none', WebkitPaddingStart: 0}}>
       {options.map((option) => (
         <li key={option.id}>
           <input type='checkbox' key={option.id}
