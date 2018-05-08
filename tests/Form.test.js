@@ -14,7 +14,6 @@ describe('Form', () => {
         <TextField attr='myfield' label='foo'/>
       </Form>
     )
-    console.log('wrapper', wrapper.debug())
     wrapper.find('input').simulate('change', { target: { value: 'Bar' }})
 
     expect(mockOnChange.args[0][0]).toEqual({myfield: 'Bar'});

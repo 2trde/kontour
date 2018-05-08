@@ -19,7 +19,7 @@ describe('IntField', () => {
 
   it('renders a input field in edit mode', () => {
     const wrapper = mount(<IntField edit={true} value={123}/>)
-    expect(wrapper.find('input').prop('value')).toBe(123)
+    expect(wrapper.find('input').prop('value')).toBe('123')
   });
 
   it('renders null in edit mode', () => {

@@ -3,7 +3,6 @@ import moment from 'moment'
 import './Calendar.css';
 
 moment.locale("de")
-moment.lang("de")
 
 const buttonStyle = {
   height: '30px',
