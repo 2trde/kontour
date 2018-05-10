@@ -46,10 +46,11 @@ class MultiSelectField extends Field {
 
   handleOnChange(opt) {
     let newValue = null
+    let curValue = this.props.value == null ? [] : this.props.value
     if (opt.selected) {
-      newValue = this.props.value.filter(o => o != opt.value)
+      newValue = curValue.filter(o => o != opt.value)
     } else {
-      newValue = [...this.props.value, opt.value]
+      newValue = [...curValue, opt.value]
     }
     this.props.onChange(newValue)
   }

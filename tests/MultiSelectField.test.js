@@ -22,4 +22,13 @@ describe('MultiSelectField', () => {
     //expect(wrapper.debug()).toEqual('');
     // how to test the input-fields
   });
+  it('it should not crash with obj if value is null', () => {
+    const mockOnChange = sinon.spy();
+    const options = [{id: 1, name: 'foo'}]
+    const selected = null
+    const wrapper = mount(<MultiSelectField edit={true} value={selected} options={options}
+                                            keyFun={(o) => o.id} textFun={(o) => o.name} onChange={mockOnChange}/>)
+    wrapper.find('input').simulate('change', { target: { }})
+    expect(mockOnChange.args[0][0]).toEqual([{"id": 1, "name": "foo"}])
+  });
 })
