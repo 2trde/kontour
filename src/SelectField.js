@@ -51,6 +51,7 @@ class SelectField extends Field {
       if (typeof(val.key) != 'undefined' && val.key == this.props.value)
         text = val.text
     }) 
+    if (!text || text == '') text = '\u00a0'
     return <span>{text}</span>
   }
 

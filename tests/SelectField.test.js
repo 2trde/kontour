@@ -11,4 +11,8 @@ describe('SelectField', () => {
     const wrapper = mount(<SelectField edit={false} value={false} options={[{key: false, text: 'nein'}, {key: true, text: 'nein'}]}/>)
     expect(wrapper.find('span').text()).toBe('nein')
   });
+  it('display null value with nbsp', () => {
+    const wrapper = mount(<SelectField edit={false} value={null} options={[{key: '0', text: 'nein'}, {key: true, text: 'nein'}]}/>)
+    expect(wrapper.find('span').text()).toBe('\u00a0')
+  });
 })
