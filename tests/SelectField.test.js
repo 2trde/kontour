@@ -15,4 +15,17 @@ describe('SelectField', () => {
     const wrapper = mount(<SelectField edit={false} value={null} options={[{key: '0', text: 'nein'}, {key: true, text: 'nein'}]}/>)
     expect(wrapper.find('span').text()).toBe('\u00a0')
   });
+
+
+  it('accept key to be false', () => {
+    const options = [{key: false, text: 'no'}, {key: true, text: 'yes'}]
+    const wrapper = mount(<SelectField edit={true} value={false} options={options}/>)
+    expect(wrapper.find('select').props().value).toBe(false)
+  });
+  it('accept key to be true', () => {
+    const options = [{key: false, text: 'no'}, {key: true, text: 'yes'}]
+    const wrapper = mount(<SelectField edit={true} value={true} options={options}/>)
+    expect(wrapper.find('select').props().value).toBe(true)
+  });
+
 })
