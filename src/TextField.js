@@ -74,7 +74,7 @@ class TextField extends Field {
       text = "\u00A0"
     return (
       <span className={ this.props.error ? 'is-invalid' : '' } hint={this.props.error ? this.props.error.join(', ') : this.props.error}>
-        {text}
+        {text == null || text == '' ? this.props.displayPlaceholder : text}
       </span>
     )
   }
@@ -87,6 +87,7 @@ class TextField extends Field {
       value: this.state.value,
       disabled: this.props.readOnly,
       isPassword: this.props.isPassword,
+      placeholder: this.props.placeholder,
       ...extraProps
     }
     return <RenderTextInput {...props}/>
@@ -98,7 +99,9 @@ TextField.defaultProps = {
   readOnly: false,
   regex: null,
   error: null,
-  isPassword: false
+  isPassword: false,
+  displayPlaceholder: '',
+  placeholder: ''
 }
 
 TextField.propTypes = {
@@ -109,7 +112,9 @@ TextField.propTypes = {
   onTransformInput: PropTypes.func,
   readOnly: PropTypes.bool,
   isPassword: PropTypes.bool,
-  maxLength: PropTypes.number
+  maxLength: PropTypes.number,
+  placeholder: PropTypes.string,
+  displayPlaceholder: PropTypes.string
 }
 
 export {RenderTextInput, TextField}
