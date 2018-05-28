@@ -3,8 +3,9 @@ import {getAttribute, setAttribute} from './ObjectHelper'
 import PropTypes from 'prop-types'
 
 let RenderFormElement = ({label, field}) => {
+  const cls = field.props.attr ? `field_${field.props.attr.replace('.', '-')}` : ''
   return (
-    <div className="form-group">
+    <div className={`form-group ${cls}`}>
       <label className="">{label}</label>
       <div>
         {field}
