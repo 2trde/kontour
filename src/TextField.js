@@ -2,12 +2,12 @@ import React from 'react'
 import {Field} from './Field'
 import PropTypes from 'prop-types'
 
-const RenderTextInput = ({invalid, errorText, style, onChange, value, disabled, isPassword}) => {
+const RenderTextInput = ({invalid, errorText, style, onChange, value, disabled, isPassword, placeholder}) => {
   const validClass = invalid ? 'is-invalid' : ''
   const classNames = ('form-control ' + validClass).trim()
   style = {...style, display: 'inline-block'}
   return (
-    <input type={isPassword ? 'password' : 'text'} style={ style } title={errorText} className={classNames} onChange={onChange} value={value ? value : ''} disabled={disabled}/>
+    <input type={isPassword ? 'password' : 'text'} style={ style } title={errorText} className={classNames} onChange={onChange} value={value ? value : ''} disabled={disabled} placeholder={placeholder} />
   )
 }
 
@@ -72,9 +72,11 @@ class TextField extends Field {
       text = ''+this.valueToText(this.props.value)
     if (text.trim() == '')
       text = "\u00A0"
+    if (typeof(this.props.value) == 'undefined' && this.props.displayPlaceholder)
+      text = this.props.displayPlaceholder
     return (
       <span className={ this.props.error ? 'is-invalid' : '' } hint={this.props.error ? this.props.error.join(', ') : this.props.error}>
-        {text == null || text == '' ? this.props.displayPlaceholder : text}
+        {text}
       </span>
     )
   }
@@ -100,8 +102,8 @@ TextField.defaultProps = {
   regex: null,
   error: null,
   isPassword: false,
-  displayPlaceholder: '',
-  placeholder: ''
+  displayPlaceholder: null,
+  placeholder: null
 }
 
 TextField.propTypes = {
