@@ -1,6 +1,7 @@
 import {Form} from './Form'
 import {Table} from './Table'
 import {TextField} from './TextField'
+import {TextAreaField} from './TextAreaField'
 import {IntField} from './IntField'
 import {FloatField} from './FloatField'
 import {DateField} from './DateField'
@@ -16,6 +17,7 @@ export {
   Table,
   Form,
   TextField,
+  TextAreaField,
   IntField,
   FloatField,
   DateField,
