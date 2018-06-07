@@ -13,6 +13,14 @@ let RenderFormElement = ({label, field}) => {
     </div>)
 }
 
+let RenderForm = ({children}) => {
+  return (
+    <form onSubmit={ (e) => { e.preventDefault() } }>
+      {children}
+    </form>
+  )
+}
+
 class Form extends Component {
   changeAttribute(attribute, value) {
     const newValue = setAttribute(this.props.value, attribute, value)
@@ -39,9 +47,9 @@ class Form extends Component {
     }.bind(this));
 
     return (
-      <form onSubmit={ (e) => { e.preventDefault() } }>
+      <RenderForm>
         {React.Children.map(childrenWithProps, (child) => { return this.renderFormElement(child) } ) }
-      </form>
+      </RenderForm>
     )
   }
 }
@@ -54,5 +62,6 @@ Form.propTypes = {
 }
 
 const changeRenderFormElement = (newRenderer) => { RenderFormElement = newRenderer }
+const changeRenderForm = (newRenderer) => { RenderForm = newRenderer }
 
-export {Form, RenderFormElement, changeRenderFormElement};
+export {Form, RenderFormElement, changeRenderForm, changeRenderFormElement};

@@ -28,4 +28,18 @@ describe('SelectField', () => {
     expect(wrapper.find('select').props().value).toBe(true)
   });
 
+
+  it('reflects invalid status', () => {
+    const options = [{key: false, text: 'no'}, {key: true, text: 'yes'}]
+    const wrapper = mount(<SelectField edit={true} value={null} options={options} required={true}/>)
+    expect(wrapper.find('select').hasClass('is-invalid')).toBe(true)
+  })
+
+  it('remove invalid status if props change', () => {
+    const options = [{key: false, text: 'no'}, {key: true, text: 'yes'}]
+    const wrapper = mount(<SelectField edit={true} value={null} options={options} required={true}/>)
+    expect(wrapper.find('select').hasClass('is-invalid')).toBe(true)
+    wrapper.setProps({value: true})
+    expect(wrapper.find('select').hasClass('is-invalid')).toBe(false)
+  })
 })

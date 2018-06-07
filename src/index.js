@@ -1,5 +1,5 @@
 import {changeRenderStatic} from './Field'
-import {Form, changeRenderFormElement} from './Form'
+import {Form, changeRenderForm, changeRenderFormElement} from './Form'
 import {Table} from './Table'
 import {TextField, changeRenderTextInput} from './TextField'
 import {TextAreaField} from './TextAreaField'
@@ -30,6 +30,7 @@ export {
   MyModal,
   TimeSelector,
   changeRenderTextInput,
+  changeRenderForm,
   changeRenderFormElement,
   changeRenderStatic
 }

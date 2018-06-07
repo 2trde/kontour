@@ -22,6 +22,11 @@ class SelectField extends Field {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      invalid: nextProps.required && !nextProps.value
+    })
+  }
   getOptions() {
     if (this.props.options) {
       return this.props.options.map((opt) => {
