@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import moment from 'moment'
-import './Calendar.css';
 
 moment.locale("de")
 
@@ -12,9 +11,9 @@ const buttonStyle = {
 const YearSelector = ({value, onChange}) => {
   const goBack = () => onChange( value.clone().subtract(1, 'year'))
   const goForward = () => onChange( value.clone().add(1, 'year'))
-  return <div className='year-selector'>
+  return <div style={{display: 'inline-flex', width: '50%'}}>
     <button style={buttonStyle} onClick={goBack}> &lt;  </button>
-      <span> { value.year() } </span>
+      <span style={{width: '100%', flexGrow: 1, textAlign: 'center'}}> { value.year() } </span>
     <button style={buttonStyle} onClick={goForward}> &gt; </button>
   </div>
 }
@@ -22,23 +21,35 @@ const YearSelector = ({value, onChange}) => {
 const MonthSelector = ({value, onChange}) => {
   const goBack = () => onChange( value.clone().subtract(1, 'months'))
   const goForward = () => onChange( value.clone().add(1, 'months'))
-  return <div className='month-selector'>
+  return <div className='month-selector' style={{display: 'inline-flex', width: '50%'}}>
     <button style={buttonStyle} onClick={goBack}> &lt;  </button>
-      <span> { value.format('MMMM') } </span>
+      <span style={{width: '100%', flexGrow: 1, textAlign: 'center'}}> { value.format('MMMM') } </span>
     <button style={buttonStyle} onClick={goForward}> &gt; </button>
   </div>
 }
 
 const Day = ({value, currentDay, onSelectDay}) => {
   let className = 'day'
+  let style = {
+    display: 'inline-block',
+    padding: '10px',
+    width: '20px',
+    flexGrow: 1
+  }
   if (value.date() === currentDay.date() && value.month() === currentDay.month())
-    className = 'current-day'
+    style = {
+      ...style,
+      background: 'red'
+    }
   else if (value.month() !== currentDay.month())
-    className = 'day-other'
+    style = {
+      ...style,
+      color: 'lightgrey'
+    }
 
-  return <div style={{flexGrow: 1}} key={'' + value.date() + '_' + value.month()}
+  return <div style={style} key={'' + value.date() + '_' + value.month()}
     onClick={(e) => onSelectDay(value)}
-    className={className}>
+    style={style}>
       {value.date()}
     </div>
 }
@@ -55,13 +66,13 @@ function chunkArray(arr, chunkSize) {
 }
 
 
-const DaysRow = ({children, className}) => {
+const DaysRow = ({children, className, style}) => {
   const rows = chunkArray(React.Children.toArray(children), 7)
-
+  style = {...style, display:'flex'}
   return rows.map((row, idx) => (
-    <div key={idx} style={{display:'flex'}} className={className}>
+    <div key={idx} style={{display:'flex'}} style={style}>
       { row.map((el,i) => (
-        React.cloneElement(el, {style: {flexGrow: 1}})
+        React.cloneElement(el, {style: {...el.props.style, flexGrow: 1}})
       ))}
     </div>
   ))
@@ -117,15 +128,24 @@ class Calendar extends Component {
 
   render() {
     const weekDays = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So']
+    const weekDayStyle = {
+      display: 'inline-block',
+      padding: '10px',
+    }
 
+    const style={
+      border: '1px solid',
+      display: 'inline-block',
+      width: '290px'
+    }
     const days = this.daysToDisplay(this.currentDate())
-    return <div className="calendar">
+    return <div style={style}>
       <div className=''>
         <MonthSelector value={this.currentDate()} onChange={this.props.onChange}/>
         <YearSelector value={this.currentDate()} onChange={this.props.onChange}/>
       </div>
-      <DaysRow className='week-days'>
-        {weekDays.map((wday) => <div key={wday} className="week-day" key={wday}>{wday}</div> )}
+      <DaysRow style={{background: 'lightblue'}}>
+        {weekDays.map((wday) => <div key={wday} style={weekDayStyle} key={wday}>{wday}</div> )}
       </DaysRow>
       <DaysRow>
         {days.map((d) => <Day key={''+d.date()+'_'+d.month()} value={d} currentDay={this.currentDate()} onSelectDay={(e) => this.onSelectDay(d)}/>)}
@@ -134,4 +154,4 @@ class Calendar extends Component {
   } 
 }
 
-export default Calendar;
+export default Calendar
