@@ -5,6 +5,22 @@ import Calendar from './Calendar'
 import {MyModal} from './MyModal'
 import moment from 'moment'
 
+let RenderDateField = ({textFieldRender, value, showCalendar, onShowCalendar, onHideCalendar, onChange}) => {
+  const date = moment(value, 'YYYY-MM-DD')
+  return (
+    <div style={{ display: 'inline-flex', width: '100%' }}>
+      { textFieldRender({style: {width: 'auto', flexGrow: 1}}) } 
+      <button className="btn btn-primary" style={ {display: 'inline-block'} } onClick={onShowCalendar}>...</button>
+      <MyModal width={340} show={showCalendar} onHide={onHideCalendar}>
+        <Calendar value={date} onChange={(d) => onChange(d.format('YYYY-MM-DD'))}/>
+        <div style={{textAlign: 'right'}}>
+          <button onClick={onHideCalendar}>übernehmen</button>
+        </div>
+      </MyModal>
+    </div>
+  )
+}
+
 class DateField extends TextField {
   valueToText(value) {
     if (typeof(value) == 'string') {
@@ -21,7 +37,6 @@ class DateField extends TextField {
   }
   onChangeCal(d) {
     const val = d.format('YYYY-MM-DD')
-    const text = d.format('DD.MM.YYYY')
     if (this.props.onChange)
       this.props.onChange(val)
   }
@@ -33,25 +48,20 @@ class DateField extends TextField {
     this.setState({showCalendar: false})
   }
   renderEdit() {
-    const date = moment(this.props.value, 'YYYY-MM-DD')
     const props = {
-      className: this.state.cls + " form-control",
-      onChange: this.onChange.bind(this),
-      value: this.state.value,
-      style: {display: 'inline-block'}
+      textFieldRender: super.renderEdit.bind(this), 
+      value: this.props.value, 
+      showCalendar: this.state.showCalendar, 
+      onShowCalendar: () => this.setState({showCalendar: true}), 
+      onHideCalendar: () => this.setState({showCalendar: false}),
+      onChange: this.props.onChange.bind(this)
     }
-    return (
-    <div style={{ display: 'inline-flex', width: '100%' }}>
-      { super.renderEdit({style: {width: 'auto', flexGrow: 1}}) } 
-      <button className="btn btn-primary" style={ {display: 'inline-block'} } onClick={(e) => this.onShowCalendar(e)}>...</button>
-      <MyModal width={340} show={this.state.showCalendar} onHide={this.onCalendarClose.bind(this)}>
-        <Calendar value={date} onChange={ (d) => this.onChangeCal(d)}/>
-        <div style={{textAlign: 'right'}}>
-          <button onClick={this.onCalendarClose.bind(this)}>übernehmen</button>
-        </div>
-      </MyModal>
-    </div>)
+    return <RenderDateField {...props}/>
   }
+}
+
+DateField.defaultProps = {
+  onChange: () => {}
 }
 
 export {DateField}
