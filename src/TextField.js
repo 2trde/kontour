@@ -7,7 +7,7 @@ let RenderTextInput = ({invalid, errorText, style, onChange, value, disabled, is
   const classNames = ('form-control ' + validClass).trim()
   style = {...style, display: 'inline-block'}
   return (
-    <input type={isPassword ? 'password' : 'text'} style={ style } title={errorText} className={classNames} onChange={onChange} value={value ? value : ''} disabled={disabled} placeholder={placeholder} />
+    <input type={isPassword ? 'password' : 'text'} style={ style } title={errorText} className={classNames} onChange={({target}) => onChange(target.value)} value={value ? value : ''} disabled={disabled} placeholder={placeholder} />
   )
 }
 
@@ -26,9 +26,7 @@ class TextField extends Field {
       this.setState(newState)
     }
   }
-  onChange(e) {
-    let text = e.target.value
-
+  onChange(text) {
     if (this.props.onTransformInput) {
       text = this.props.onTransformInput(text) 
     }
