@@ -53,4 +53,6 @@ Form.propTypes = {
   errors: PropTypes.object
 }
 
-export {Form, RenderFormElement};
+const changeRenderFormElement = (newRenderer) => { RenderFormElement = newRenderer }
+
+export {Form, RenderFormElement, changeRenderFormElement};

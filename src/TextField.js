@@ -2,7 +2,7 @@ import React from 'react'
 import {Field} from './Field'
 import PropTypes from 'prop-types'
 
-const RenderTextInput = ({invalid, errorText, style, onChange, value, disabled, isPassword, placeholder}) => {
+let RenderTextInput = ({invalid, errorText, style, onChange, value, disabled, isPassword, placeholder}) => {
   const validClass = invalid ? 'is-invalid' : ''
   const classNames = ('form-control ' + validClass).trim()
   style = {...style, display: 'inline-block'}
@@ -119,4 +119,6 @@ TextField.propTypes = {
   displayPlaceholder: PropTypes.string
 }
 
-export {RenderTextInput, TextField}
+const changeRenderTextInput = (newRenderer) => {RenderTextInput = newRenderer}
+
+export {RenderTextInput, TextField, changeRenderTextInput}

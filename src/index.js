@@ -1,6 +1,7 @@
-import {Form} from './Form'
+import {changeRenderStatic} from './Field'
+import {Form, changeRenderFormElement} from './Form'
 import {Table} from './Table'
-import {TextField} from './TextField'
+import {TextField, changeRenderTextInput} from './TextField'
 import {TextAreaField} from './TextAreaField'
 import {IntField} from './IntField'
 import {FloatField} from './FloatField'
@@ -27,5 +28,8 @@ export {
   ObjectSelectField,
   MultiSelectField,
   MyModal,
-  TimeSelector
+  TimeSelector,
+  changeRenderTextInput,
+  changeRenderFormElement,
+  changeRenderStatic
 }

@@ -1,16 +1,22 @@
 import React, { Component } from 'react'
 
+let RenderStatic = ({value, errors}) => {
+  let text = ''
+  if (value && value)
+    text = ''+value
+  if (text.trim() == '')
+    text = "\u00A0"
+  return (
+    <span className={ error ? 'is-invalid' : '' } hint={error ? errors.join(', ') : null}>
+      {text}
+    </span>
+  )
+}
+
 class Field extends Component {
   renderShow() {
-    let text = ''
-    if (this.props.value && this.props.value)
-      text = ''+this.props.value
-    if (text.trim() == '')
-      text = "\u00A0"
     return (
-      <span className={ this.props.error ? 'is-invalid' : '' } hint={this.props.error ? this.props.error.join(', ') : null}>
-        {text}
-      </span>
+      <RenderStatic value={this.props.value} errors={this.prop.error}/>
     )
   }
   render() {
@@ -21,4 +27,6 @@ class Field extends Component {
   }
 }
 
-export {Field}
+const changeRenderStatic = (newRenderer) => { RenderStatic = newRenderer }
+
+export {Field, changeRenderStatic}
