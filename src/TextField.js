@@ -1,13 +1,24 @@
 import React from 'react'
 import {Field} from './Field'
 import PropTypes from 'prop-types'
+import {getRenderer} from './Renderer'
 
-let RenderTextInput = ({invalid, errorText, style, onChange, value, disabled, isPassword, placeholder}) => {
+const RenderTextInput = ({invalid, errorText, style, onChange, value, disabled, isPassword, placeholder}) => {
   const validClass = invalid ? 'is-invalid' : ''
   const classNames = ('form-control ' + validClass).trim()
   style = {...style, display: 'inline-block'}
   return (
     <input type={isPassword ? 'password' : 'text'} style={ style } title={errorText} className={classNames} onChange={({target}) => onChange(target.value)} value={value ? value : ''} disabled={disabled} placeholder={placeholder} />
+  )
+}
+
+const RenderStaticText = ({text, errors}) => {
+  if (text.trim() == '')
+    text = "\u00A0"
+  return (
+    <span className={ errors ? 'is-invalid' : '' } hint={errors ? errors.join(', ') : errors}>
+      {text}
+    </span>
   )
 }
 
@@ -68,15 +79,13 @@ class TextField extends Field {
     let text = ''
     if (this.props.value)
       text = ''+this.valueToText(this.props.value)
-    if (text.trim() == '')
-      text = "\u00A0"
     if (typeof(this.props.value) == 'undefined' && this.props.displayPlaceholder)
       text = this.props.displayPlaceholder
-    return (
-      <span className={ this.props.error ? 'is-invalid' : '' } hint={this.props.error ? this.props.error.join(', ') : this.props.error}>
-        {text}
-      </span>
-    )
+    const props = {
+      errors: this.props.error,
+      text: text,
+    }
+    return React.createElement(getRenderer('TextField', 'display', RenderStaticText), props, '')
   }
   renderEdit(extraProps) {
     const props = {
@@ -90,7 +99,7 @@ class TextField extends Field {
       placeholder: this.props.placeholder,
       ...extraProps
     }
-    return <RenderTextInput {...props}/>
+    return React.createElement(getRenderer('TextField', 'edit', RenderTextInput), props, '')
   }
 }
 
@@ -117,6 +126,4 @@ TextField.propTypes = {
   displayPlaceholder: PropTypes.string
 }
 
-const changeRenderTextInput = (newRenderer) => {RenderTextInput = newRenderer}
-
-export {RenderTextInput, TextField, changeRenderTextInput}
+export {RenderTextInput, TextField}

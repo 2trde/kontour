@@ -4,8 +4,9 @@ import {RenderTextInput} from './TextField'
 import Calendar from './Calendar'
 import {MyModal} from './MyModal'
 import moment from 'moment'
+import {getRenderer} from './Renderer'
 
-let RenderDateField = ({textFieldRender, value, showCalendar, onShowCalendar, onHideCalendar, onChange}) => {
+const RenderDateField = ({textFieldRender, value, showCalendar, onShowCalendar, onHideCalendar, onChange}) => {
   const date = moment(value, 'YYYY-MM-DD')
   return (
     <div style={{ display: 'inline-flex', width: '100%' }}>
@@ -56,12 +57,13 @@ class DateField extends TextField {
       onHideCalendar: () => this.setState({showCalendar: false}),
       onChange: this.props.onChange.bind(this)
     }
-    return <RenderDateField {...props}/>
+    return React.createElement(getRenderer('DateField', 'edit', RenderDateField ), props, '')
   }
 }
 
 DateField.defaultProps = {
   onChange: () => {}
 }
+
 
 export {DateField}

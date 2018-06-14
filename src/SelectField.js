@@ -1,5 +1,10 @@
 import React from 'react'
 import {Field} from './Field'
+import {getRenderer} from './Renderer'
+
+const RenderSelectDisplay = ({text}) => {
+  return <span>{text}</span>
+}
 
 const RenderSelect = ({invalid, onChange, value, options, disabled}) => {
   const validClass = invalid ? 'is-invalid' : ''
@@ -58,15 +63,19 @@ class SelectField extends Field {
         text = val.text
     }) 
     if (!text || text == '') text = '\u00a0'
-    return <span>{text}</span>
+    return React.createElement(getRenderer('SelectField', 'display', RenderSelectDisplay), {text}, '')
   }
 
   renderEdit() {
-    return <RenderSelect invalid={this.state.invalid}
-                         onChange={this.handleOnChange.bind(this)}
-                         value={this.props.value}
-                         options={this.getOptionsInclEmpty() }
-                         disable={this.props.readOnly}/>
+    const props = {
+      invalid: this.state.invalid,
+      onChange: this.handleOnChange.bind(this),
+      value: this.props.value,
+      options: this.getOptionsInclEmpty(),
+      disable: this.props.readOnly
+    }
+
+    return React.createElement(getRenderer('SelectField', 'edit', RenderSelect), props, '')
   }
 }
 

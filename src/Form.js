@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import {getAttribute, setAttribute} from './ObjectHelper'
 import PropTypes from 'prop-types'
+import {getRenderer} from './Renderer'
 
-let RenderFormElement = ({label, field}) => {
+const RenderFormElement = ({label, field}) => {
   const cls = field.props.attr ? `field-${field.props.attr.replace('.', '-').replace('_', '-')}` : ''
   return (
     <div className={`form-group ${cls}`}>
@@ -13,7 +14,7 @@ let RenderFormElement = ({label, field}) => {
     </div>)
 }
 
-let RenderForm = ({children}) => {
+const RenderForm = ({children}) => {
   return (
     <form onSubmit={ (e) => { e.preventDefault() } }>
       {children}
@@ -28,7 +29,11 @@ class Form extends Component {
       this.props.onChange(newValue)
   }
   renderFormElement(child) {
-    return <RenderFormElement field={child} label={child.props.label} />
+    const props = {
+      field: child,
+      label: child.props.label
+    }
+    return React.createElement(getRenderer('Form', 'element', RenderFormElement), props, '')
   }
   render() {
     if (!this.props.value) return ''
@@ -46,11 +51,8 @@ class Form extends Component {
       })
     }.bind(this));
 
-    return (
-      <RenderForm>
-        {React.Children.map(childrenWithProps, (child) => { return this.renderFormElement(child) } ) }
-      </RenderForm>
-    )
+    const children = React.Children.map(childrenWithProps, (child) => { return this.renderFormElement(child) } ) 
+    return React.createElement(getRenderer('Form', 'form', RenderForm), {}, children)
   }
 }
 
@@ -61,7 +63,4 @@ Form.propTypes = {
   errors: PropTypes.object
 }
 
-const changeRenderFormElement = (newRenderer) => { RenderFormElement = newRenderer }
-const changeRenderForm = (newRenderer) => { RenderForm = newRenderer }
-
-export {Form, RenderFormElement, changeRenderForm, changeRenderFormElement};
+export {Form, RenderFormElement};
