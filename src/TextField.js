@@ -97,7 +97,8 @@ class TextField extends Field {
       errors: this.props.error,
       text: text,
     }
-    return React.createElement(getRenderer('TextField', 'display', RenderStaticText), props, '')
+    const Renderer = this.props.displayRenderer || getRenderer('TextField', 'display', RenderStaticText)
+    return <Renderer {...props}/>
   }
   renderEdit(extraProps) {
     const props = {
@@ -111,7 +112,8 @@ class TextField extends Field {
       placeholder: this.props.placeholder,
       ...extraProps
     }
-    return React.createElement(getRenderer('TextField', 'edit', RenderTextInput), props, '')
+    const Renderer = this.props.editRenderer || getRenderer('TextField', 'edit', RenderTextInput)
+    return <Renderer {...props}/>
   }
 }
 

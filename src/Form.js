@@ -37,7 +37,8 @@ class Form extends Component {
       field: child,
       label: child.props.label
     }
-    return React.createElement(getRenderer('Form', 'element', RenderFormElement), props, '')
+    const Renderer = this.props.formElementRenderer || getRenderer('Form', 'element', RenderFormElement)
+    return <Renderer {...props}/>
   }
   render() {
     if (!this.props.value) return ''
@@ -57,7 +58,8 @@ class Form extends Component {
     }.bind(this));
 
     const children = React.Children.map(childrenWithProps, (child) => { return this.renderFormElement(child) } ) 
-    return React.createElement(getRenderer('Form', 'form', RenderForm), {}, children)
+    const Renderer = this.props.formRenderer || getRenderer('Form', 'form', RenderForm)
+    return <Renderer>{children}</Renderer>
   }
 
   updateValidStatus(attr, valid) {
