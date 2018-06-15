@@ -10,6 +10,7 @@ class Demo extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      formValid: null,
       edit: true,
       day: moment(),
       auction: {
@@ -57,7 +58,9 @@ class Demo extends Component {
           <TextField label="Modell" attr="model" />
           <IntField label="Laufleistung" attr="mileage" />
         </Table>
-        <Form edit={this.state.edit} value={this.state.auction} onChange={(val) => this.setState({auction: val})}>
+        <Form edit={this.state.edit} value={this.state.auction}
+              onChange={(val) => this.setState({auction: val})}
+              onValidChange={(formValid) => this.setState({formValid})}>
           <TextField label="Hersteller" attr="maker"  required={true} />
           <TextField label="Modell" attr="model" />
           <IntField label="Laufleistung" attr="mileage" />
@@ -68,6 +71,7 @@ class Demo extends Component {
           <MultiSelectField attr='multiSelect' label='MultiSelect' options={['foo', 'bar', 'bla']}/>
           <TextAreaField label="Description" attr="description" />
         </Form>
+        <div>Form is valid: {this.state.formValid ? 'valid' : 'invalid'} </div> 
         <button onClick={ () => this.setState({edit: !this.state.edit}) }>Toggle Edit</button>
       </div>
     );

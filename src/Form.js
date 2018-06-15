@@ -23,6 +23,10 @@ const RenderForm = ({children}) => {
 }
 
 class Form extends Component {
+  constructor(props)  {
+    super(props)
+    this.fieldValidStatus = {}
+  }
   changeAttribute(attribute, value) {
     const newValue = setAttribute(this.props.value, attribute, value)
     if (this.props.onChange)
@@ -46,6 +50,7 @@ class Form extends Component {
       return React.cloneElement(child, {
         value: this.props.value ? getAttribute(this.props.value, child.props.attr) : null,
         onChange: (newValue) => this.changeAttribute(child.props.attr, newValue),
+        onValidChange: (valid) => this.updateValidStatus(child.props.attr, valid),
         edit: this.props.edit,
         error: error
       })
@@ -53,6 +58,17 @@ class Form extends Component {
 
     const children = React.Children.map(childrenWithProps, (child) => { return this.renderFormElement(child) } ) 
     return React.createElement(getRenderer('Form', 'form', RenderForm), {}, children)
+  }
+
+  updateValidStatus(attr, valid) {
+    if (this.fieldValidStatus[attr] !== valid) {
+      const validStatus = {...this.fieldValidStatus}
+      validStatus[attr] = valid
+      const allValid = Object.entries(validStatus).filter(([k, v]) => v == false).length == 0
+      if (this.props.onValidChange && this.fieldValidStatus !== validStatus)
+        this.props.onValidChange(allValid)
+      this.fieldValidStatus = validStatus
+    }
   }
 }
 

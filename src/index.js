@@ -5,7 +5,7 @@ import {TextField} from './TextField'
 import {TextAreaField} from './TextAreaField'
 import {IntField} from './IntField'
 import {FloatField} from './FloatField'
-import {DateField, changeRenderDateField} from './DateField'
+import {DateField} from './DateField'
 import {DateTimeField} from './DateTimeField'
 import {TimeSelector} from './TimeSelector'
 import {SelectField} from './SelectField'
@@ -31,9 +31,4 @@ export {
   MyModal,
   TimeSelector,
   setRenderer,
-  changeRenderTextInput,
-  changeRenderForm,
-  changeRenderFormElement,
-  changeRenderStatic,
-  changeRenderDateField
 }

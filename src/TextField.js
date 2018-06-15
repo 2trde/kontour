@@ -25,35 +25,47 @@ const RenderStaticText = ({text, errors}) => {
 class TextField extends Field {
   constructor(props) {
     super(props)
+    const isInvalid = (this.props.required && !this.props.value)
     this.state = {
-      invalid: (this.props.required && !this.props.value),
+      invalid: isInvalid,
       value: this.valueToText(props.value)
     }
+    if (props.onValidChange)
+      props.onValidChange(!isInvalid)
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.value !== this.props.value) {
+      const isInvalid = this.props.required && !nextProps.value
       const newState = {value: this.valueToText(nextProps.value),
-                     invalid: this.props.required && !nextProps.value}
+                     invalid: isInvalid}
       this.setState(newState)
+      if (this.props.onValidChange)
+        this.props.onValidChange(!isInvalid)
     }
   }
   onChange(text) {
     if (this.props.onTransformInput) {
       text = this.props.onTransformInput(text) 
     }
-
+  
+    let isInvalid = false
     if (text == '') {
+      isInvalid = this.props.required
       this.setState({value: text, invalid: this.props.required})
       if (this.props.onChange)
         this.props.onChange(null)
     }
     else if (this._isValidText(text)) {
+      isInvalid = false
       this.setState({value: text, invalid: false})
       if (this.props.onChange)
         this.props.onChange(this.textToValue(text))
     } else {
+      isInvalid = true
       this.setState({value: text, invalid: true})
     }
+    if (this.props.onValidChange)
+      this.props.onValidChange(!isInvalid)
   }
   valueToText(value) {
     if (value == null)

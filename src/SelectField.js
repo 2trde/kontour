@@ -22,15 +22,21 @@ const RenderSelect = ({invalid, onChange, value, options, disabled}) => {
 class SelectField extends Field {
   constructor(props) {
     super(props)
+    const isInvalid = this.props.required && !this.props.value
     this.state = {
-      invalid: this.props.required && !this.props.value
+      invalid: isInvalid
     }
+    if (props.onValidChange)
+      props.onValidChange(!isInvalid)
   }
 
   componentWillReceiveProps(nextProps) {
+    const isInvalid = nextProps.required && !nextProps.value
     this.setState({
       invalid: nextProps.required && !nextProps.value
     })
+    if (this.props.onValidChange)
+      this.props.onValidChange(!isInvalid)
   }
   getOptions() {
     if (this.props.options) {
@@ -53,7 +59,10 @@ class SelectField extends Field {
     const newValue = e.target.value == '' ? null : e.target.value
     if (this.props.onChange)
       this.props.onChange(newValue)
-    this.setState({invalid: this.props.required && !newValue}) 
+    const isInvalid = this.props.required && !newValue
+    this.setState({invalid: isInvalid}) 
+    if (this.props.onValidChange)
+      this.props.onValidChange(!isInvalid)
   }
 
   renderShow() {

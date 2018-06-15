@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import {getRenderer} from './Renderer'
 
 let RenderStatic = ({value, errors}) => {
   let text = ''
@@ -15,9 +16,11 @@ let RenderStatic = ({value, errors}) => {
 
 class Field extends Component {
   renderShow() {
-    return (
-      <RenderStatic value={this.props.value} errors={this.prop.error}/>
-    )
+    const props = {
+      value: this.props.value,
+      errors: this.props.error
+    }
+    return React.createElement(getRenderer('Field', 'display', RenderStatic), props, '')
   }
   render() {
     if (this.props.edit)
@@ -27,6 +30,5 @@ class Field extends Component {
   }
 }
 
-const changeRenderStatic = (newRenderer) => { RenderStatic = newRenderer }
 
-export {Field, changeRenderStatic}
+export {Field}
