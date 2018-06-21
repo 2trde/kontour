@@ -27,14 +27,14 @@ class DateField extends TextField {
     if (typeof(value) == 'string') {
       value = moment(value, "YYYY-MM-DD")
     }
-    return (value) ? value.format('DD.MM.YYYY') : ''
+    return (value) ? value.format(this.props.displayPattern) : ''
   }
   isValidText(text) {
-    const date = moment(text, "DD.MM.YYYY", true)
+    const date = moment(text, this.props.displayPattern, true)
     return date.isValid()
   }
   textToValue(text) {
-    return text == '' ? null : moment(text, 'DD.MM.YYYY').format('YYYY-MM-DD')
+    return text == '' ? null : moment(text, this.props.displayPattern).format('YYYY-MM-DD')
   }
   onChangeCal(d) {
     const val = d.format('YYYY-MM-DD')
@@ -62,8 +62,8 @@ class DateField extends TextField {
 }
 
 DateField.defaultProps = {
-  onChange: () => {}
+  onChange: () => {},
+  displayPattern: 'DD.MM.YYYY'
 }
-
 
 export {DateField}
