@@ -115,7 +115,7 @@ class TextField extends Field {
       disabled: this.props.readOnly,
       isPassword: this.props.isPassword,
       placeholder: this.props.placeholder,
-      inputFlavor: this.inputFlavor,
+      inputFlavor: this.inputFlavor(),
       ...extraProps
     }
     const Renderer = this.props.editRenderer || getRenderer('TextField', 'edit', RenderTextInput)
