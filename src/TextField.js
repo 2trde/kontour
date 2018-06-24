@@ -3,7 +3,7 @@ import {Field} from './Field'
 import PropTypes from 'prop-types'
 import {getRenderer} from './Renderer'
 
-const RenderTextInput = ({invalid, errorText, style, onChange, value, disabled, isPassword, placeholder}) => {
+const RenderTextInput = ({invalid, errorText, style, onChange, value, disabled, isPassword, placeholder, inputFlavor}) => {
   const validClass = invalid ? 'is-invalid' : ''
   const classNames = ('form-control ' + validClass).trim()
   style = {...style, display: 'inline-block'}
@@ -33,6 +33,11 @@ class TextField extends Field {
     if (props.onValidChange)
       props.onValidChange(!isInvalid)
   }
+
+  inputFlavor() {
+    return 'text'
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.value !== this.props.value) {
       const isInvalid = this.props.required && !nextProps.value
@@ -110,6 +115,7 @@ class TextField extends Field {
       disabled: this.props.readOnly,
       isPassword: this.props.isPassword,
       placeholder: this.props.placeholder,
+      inputFlavor: this.inputFlavor,
       ...extraProps
     }
     const Renderer = this.props.editRenderer || getRenderer('TextField', 'edit', RenderTextInput)

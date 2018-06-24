@@ -52,7 +52,7 @@ class SelectField extends Field {
   }
 
   getOptionsInclEmpty() {
-    return [{key: null, test: ""}].concat(this.getOptions())
+    return [{key: null, text: ""}].concat(this.getOptions())
   }
 
   handleOnChange(newValue) {

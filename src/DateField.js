@@ -23,6 +23,10 @@ const RenderDateField = ({textFieldRender, value, showCalendar, onShowCalendar, 
 }
 
 class DateField extends TextField {
+  inputFlavor() {
+    return 'number'
+  }
+
   valueToText(value) {
     if (typeof(value) == 'string') {
       value = moment(value, "YYYY-MM-DD")

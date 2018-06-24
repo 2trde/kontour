@@ -3,6 +3,10 @@ import {TextField} from './TextField'
 import PropTypes from 'prop-types'
 
 class IntField extends TextField {
+  inputFlavor() {
+    return 'number'
+  }
+
   isValidText(value) {
     return value.match(/^\d*$/) 
   }
