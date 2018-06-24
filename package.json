@@ -1,6 +1,6 @@
 {
   "name": "kontour",
-  "version": "0.0.34",
+  "version": "0.0.35",
   "description": "Kontour React component",
   "main": "lib/index.js",
   "module": "es/index.js",

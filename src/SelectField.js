@@ -11,7 +11,7 @@ const RenderSelect = ({invalid, onChange, value, options, disabled}) => {
   const classNames = ('form-control ' + validClass).trim()
   const val = typeof(value) == 'undefined' || value === null  ? '' : value
   return (
-    <select onChange={onChange} value={val} className={classNames} disabled={disabled}>
+    <select onChange={({target}) => onChange(target.value == '' ? null : target.value)} value={val} className={classNames} disabled={disabled}>
       {options.map((option) => {
         return <option key={option.key} value={option.key} >{ option.text }</option>
       })}
@@ -55,8 +55,7 @@ class SelectField extends Field {
     return [{key: null, test: ""}].concat(this.getOptions())
   }
 
-  handleOnChange(e) {
-    const newValue = e.target.value == '' ? null : e.target.value
+  handleOnChange(newValue) {
     if (this.props.onChange)
       this.props.onChange(newValue)
     const isInvalid = this.props.required && !newValue
