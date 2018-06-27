@@ -98,6 +98,8 @@ class TextField extends Field {
       text = ''+this.valueToText(this.props.value)
     if (typeof(this.props.value) == 'undefined' && this.props.displayPlaceholder)
       text = this.props.displayPlaceholder
+    if (this.props.isPassword)
+      text = text.replace(/./g, '*')
     const props = {
       errors: this.props.error,
       text: text,

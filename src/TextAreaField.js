@@ -7,7 +7,9 @@ const RenderTextAreaInput = ({invalid, errorText, style, onChange, value, disabl
   const classNames = ('form-control ' + validClass).trim()
   style = {...style, display: 'inline-block'}
   return (
-    <textarea style={ style } title={errorText} className={classNames} onChange={onChange} value={value ? value : ''} disabled={disabled} placeholder={placeholder} />
+    <textarea style={ style } title={errorText} className={classNames}
+      onChange={({target}) => onChange(target.value)}
+      value={value ? value : ''} disabled={disabled} placeholder={placeholder} />
   )
 }
 
