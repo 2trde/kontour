@@ -45,10 +45,11 @@ class MultiSelectField extends Field {
   }
 
   handleOnChange(opt) {
+    const keyFun = this.props.keyFun
     let newValue = null
     let curValue = this.props.value == null ? [] : this.props.value
     if (opt.selected) {
-      newValue = curValue.filter(o => o != opt.value)
+      newValue = curValue.filter(o => keyFun(o) != keyFun(opt.value))
     } else {
       newValue = [...curValue, opt.value]
     }

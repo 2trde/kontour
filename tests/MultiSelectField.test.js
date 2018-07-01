@@ -31,4 +31,13 @@ describe('MultiSelectField', () => {
     wrapper.find('input').simulate('change', { target: { }})
     expect(mockOnChange.args[0][0]).toEqual([{"id": 1, "name": "foo"}])
   });
+  it('should allow to deselect existing checks', () => {
+    const mockOnChange = sinon.spy();
+    const options = [{id: 1, name: 'foo'}, {id: 2, name: 'bar'}]
+    const selected = [{id: 1, name: 'foo'}, {id: 2, name: 'bar'}]
+    const wrapper = mount(<MultiSelectField edit={true} value={selected} options={options}
+                                            keyFun={(o) => o.id} textFun={(o) => o.name} onChange={mockOnChange}/>)
+    wrapper.find('input').first().simulate('change', { target: { }})
+    expect(mockOnChange.args[0][0]).toEqual([{"id": 2, "name": "bar"}])
+  })
 })
