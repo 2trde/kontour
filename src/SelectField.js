@@ -80,7 +80,8 @@ class SelectField extends Field {
       onChange: this.handleOnChange.bind(this),
       value: this.props.value,
       options: this.getOptionsInclEmpty(),
-      disable: this.props.readOnly
+      disable: this.props.readOnly,
+      fieldProps: this.props,
     }
 
     return React.createElement(getRenderer('SelectField', 'edit', RenderSelect), props, '')
