@@ -118,6 +118,7 @@ class TextField extends Field {
       isPassword: this.props.isPassword,
       placeholder: this.props.placeholder,
       inputFlavor: this.inputFlavor(),
+      fieldProps: this.props,
       ...extraProps
     }
     const Renderer = this.props.editRenderer || getRenderer('TextField', 'edit', RenderTextInput)
