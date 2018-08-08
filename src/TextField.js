@@ -50,9 +50,9 @@ class TextField extends Field {
   }
   onChange(text) {
     if (this.props.onTransformInput) {
-      text = this.props.onTransformInput(text) 
+      text = this.props.onTransformInput(text)
     }
-  
+
     let isInvalid = false
     if (text == '') {
       isInvalid = this.props.required
@@ -79,10 +79,10 @@ class TextField extends Field {
   }
   isValidText(text) {
     if (this.props.regex && !text.match(this.props.regex)) {
-      return false 
+      return false
     }
     if (this.props.maxLength && text.length > this.props.maxLength) {
-      return false 
+      return false
     }
     return true
   }

@@ -52,7 +52,10 @@ class SelectField extends Field {
   }
 
   getOptionsInclEmpty() {
-    return [{key: null, text: ""}].concat(this.getOptions())
+    if (this.props.forceSelect)
+      return this.getOptions()
+    else
+      return [{key: null, text: ""}].concat(this.getOptions())
   }
 
   handleOnChange(newValue) {
