@@ -62,7 +62,7 @@ class SelectField extends Field {
     if (this.props.onChange)
       this.props.onChange(newValue)
     const isInvalid = this.props.required && !newValue
-    this.setState({invalid: isInvalid}) 
+    this.setState({invalid: isInvalid})
     if (this.props.onValidChange)
       this.props.onValidChange(!isInvalid)
   }

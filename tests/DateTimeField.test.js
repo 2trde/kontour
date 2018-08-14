@@ -55,7 +55,14 @@ describe('DateTimeField', () => {
     const mockOnChange = sinon.spy();
     const wrapper = mount(<DateTimeField edit={true} value={'11.05.2014'} onChange={mockOnChange}/>)
     wrapper.find('input').simulate('change', { target: { value: '' }})
-    expect(mockOnChange.calledWith(null)).toExist();;
+    expect(mockOnChange.calledWith(null)).toExist()
   });
+
+  it('should ignore the second part of a date-time, that we dont show', () => {
+    const mockOnChange = sinon.spy()
+    const wrapper = mount(<DateTimeField edit={true} value={'2015-06-11T12:30:15Z'} onChange={mockOnChange}/>)
+    wrapper.instance().onChangeCal(moment('2015-06-12T12:30:15Z'))
+    expect(mockOnChange.args[0][0]).toEqual('2015-06-12T12:30:00Z')
+  })
 })
 

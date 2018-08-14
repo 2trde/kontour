@@ -29,9 +29,10 @@ class DateTimeField extends TextField {
     return text == '' ? null : moment(text, displayFormat).utc().format()
   }
   onChangeCal(d) {
-    const val = d.utc().format()
+    let val = d.utc()
+    val = val.seconds(0)
     if (this.props.onChange)
-      this.props.onChange(val)
+      this.props.onChange(val.format())
   }
 
   currentMoment() {
