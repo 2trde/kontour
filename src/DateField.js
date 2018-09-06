@@ -56,6 +56,7 @@ class DateField extends TextField {
     const props = {
       textFieldRender: super.renderEdit.bind(this), 
       value: this.props.value, 
+      placeholder: this.props.placeholder,
       showCalendar: this.state.showCalendar, 
       onShowCalendar: () => this.setState({showCalendar: true}), 
       onHideCalendar: () => this.setState({showCalendar: false}),

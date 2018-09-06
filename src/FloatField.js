@@ -18,6 +18,12 @@ class FloatField extends TextField {
   valueToText(value) {
     if (value == null)
       return ''
+
+    if (this.props.precision) {
+      const f = 10**this.props.precision 
+      value = Math.round(value * f) / f
+    }
+
     return (''+value).replace('.', ',')
   }
 }

@@ -49,6 +49,10 @@ class TextField extends Field {
     }
   }
   onChange(text) {
+    if (this.props.onTextChange) {
+      this.props.onTextChange(text)
+    }
+
     if (this.props.onTransformInput) {
       text = this.props.onTransformInput(text)
     }

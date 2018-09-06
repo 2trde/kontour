@@ -85,6 +85,7 @@ class SelectField extends Field {
       options: this.getOptionsInclEmpty(),
       disable: this.props.readOnly,
       fieldProps: this.props,
+      placeholder: this.props.placeholder
     }
 
     return React.createElement(getRenderer('SelectField', 'edit', RenderSelect), props, '')
