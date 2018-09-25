@@ -48,13 +48,15 @@ class Form extends Component {
     let childrenWithProps = React.Children.map(list, function(child) {
       const error = this.props.errors ? getAttribute(this.props.errors, child.props.attr) : null
 
-      return React.cloneElement(child, {
-        value: this.props.value ? getAttribute(this.props.value, child.props.attr) : null,
+      const props = {
         onChange: (newValue) => this.changeAttribute(child.props.attr, newValue),
         onValidChange: (valid) => this.updateValidStatus(child.props.attr, valid),
         edit: this.props.edit,
         error: error
-      })
+      }
+      if (this.props.value || child.props.attr) 
+        props.value = getAttribute(this.props.value, child.props.attr)
+      return React.cloneElement(child, props)
     }.bind(this));
 
     const children = React.Children.map(childrenWithProps, (child) => { return this.renderFormElement(child) } ) 
