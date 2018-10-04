@@ -54,7 +54,7 @@ class Form extends Component {
         edit: this.props.edit,
         error: error
       }
-      if (this.props.value || child.props.attr) 
+      if (this.props.value && child.props.attr) 
         props.value = getAttribute(this.props.value, child.props.attr)
       return React.cloneElement(child, props)
     }.bind(this));

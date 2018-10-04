@@ -3,10 +3,10 @@ import {Field} from './Field'
 import PropTypes from 'prop-types'
 import {getRenderer} from './Renderer'
 
-const RenderTextInput = ({invalid, errorText, style, onChange, value, disabled, isPassword, placeholder, inputFlavor}) => {
+const RenderTextInput = ({invalid, errorText, onChange, value, disabled, isPassword, placeholder, inputFlavor, fieldProps}) => {
   const validClass = invalid ? 'is-invalid' : ''
   const classNames = ('form-control ' + validClass).trim()
-  style = {...style, display: 'inline-block'}
+  const style = {...fieldProps.style, display: 'inline-block'}
   return (
     <input type={isPassword ? 'password' : 'text'} style={ style } title={errorText} className={classNames} onChange={({target}) => onChange(target.value)} value={value ? value : ''} disabled={disabled} placeholder={placeholder} />
   )
