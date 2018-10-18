@@ -3,25 +3,6 @@ import {Field} from './Field'
 import PropTypes from 'prop-types'
 import {getRenderer} from './Renderer'
 
-const RenderTextInput = ({invalid, errorText, onChange, value, disabled, isPassword, placeholder, inputFlavor, fieldProps}) => {
-  const validClass = invalid ? 'is-invalid' : ''
-  const classNames = ('form-control ' + validClass).trim()
-  const style = {...fieldProps.style, display: 'inline-block'}
-  return (
-    <input type={isPassword ? 'password' : 'text'} style={ style } title={errorText} className={classNames} onChange={({target}) => onChange(target.value)} value={value ? value : ''} disabled={disabled} placeholder={placeholder} />
-  )
-}
-
-const RenderStaticText = ({text, errors}) => {
-  if (text.trim() == '')
-    text = "\u00A0"
-  return (
-    <span className={ errors ? 'is-invalid' : '' } hint={errors ? errors.join(', ') : errors}>
-      {text}
-    </span>
-  )
-}
-
 class TextField extends Field {
   constructor(props) {
     super(props)

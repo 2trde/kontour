@@ -2,22 +2,6 @@ import React from 'react'
 import {Field} from './Field'
 import PropTypes from 'prop-types'
 
-const RenderMultiSelect = ({invalid, onChange, value, options, disabled}) => {
-  const validClass = invalid ? 'is-invalid' : ''
-  return (
-    <ul style={{listStyleType: 'none', WebkitPaddingStart: 0}}>
-      {options.map((option) => (
-        <li key={option.id}>
-          <input type='checkbox' key={option.id}
-                 checked={option.selected}
-                 onChange={() => onChange(option) }/>
-          { option.text }
-        </li>
-      ))}
-    </ul>
-  )
-}
-
 class MultiSelectField extends Field {
   constructor(props) {
     super(props)
@@ -58,20 +42,29 @@ class MultiSelectField extends Field {
 
   renderShow() {
     if (!this.props.options) return ''
-    const optionsSelected =
-      this.getOptions()
-      .filter(opt => opt.selected)
-      .map(opt => opt.text)
-    return <span>{optionsSelected.join(', ')}</span>
+    const props = {
+      invalid: this.state.invalid
+      onChange: this.handleOnChange.bind(this)
+      value: this.props.value
+      options: this.getOptions() 
+      disable: this.props.readOnly
+    }
+    const Renderer = getRenderer('MultiSelectField', 'display')
+    return <Renderer {...props}/>
   }
 
   renderEdit() {
     if (!this.props.options) return ''
-    return <this.props.renderer invalid={this.state.invalid}
-                         onChange={this.handleOnChange.bind(this)}
-                         value={this.props.value}
-                         options={this.getOptions() }
-                         disable={this.props.readOnly}/>
+    const props = {
+      invalid: this.state.invalid
+      onChange: this.handleOnChange.bind(this)
+      value: this.props.value
+      options: this.getOptions() 
+      disable: this.props.readOnly
+    }
+
+    const Renderer = getRenderer('MultiSelectField', 'edit')
+    return <Renderer {...props}/>
   }
 }
 

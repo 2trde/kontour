@@ -1,9 +1,6 @@
 import React from 'react'
 import {TextField} from './TextField'
 import {RenderTextInput} from './TextField'
-import Calendar from './Calendar'
-import {TimeSelector} from './TimeSelector'
-import {MyModal} from './MyModal'
 import moment from 'moment'
 
 const inputFormat = moment.defaultFormat // 'YYYY-MM-DDTHH:mm:ssZ'
@@ -59,26 +56,18 @@ class DateTimeField extends TextField {
     this.setState({showCalendar: false})
   }
   renderEdit() {
-    const dateTime = this.currentMoment()
-    const time = dateTime.format('HH:mm')
-    return (
-    <div style={{ display: 'inline-flex', width: '100%' }}>
-      { super.renderEdit({style: {width: 'auto', flexGrow: 1}}) } 
-      <button className="btn btn-primary" style={ {display: 'inline-block'} } onClick={(e) => this.onShowCalendar(e)}>...</button>
-      <MyModal width='fit-content' show={this.state.showCalendar} onHide={this.onCalendarClose.bind(this)}>
-        <div style={{display: 'flex'}}>
-          <div style={{display: 'inline-block'}}>
-            <Calendar value={dateTime} onChange={ (d) => this.onChangeCal(d)}/>
-          </div>
-          <div style={{marginLeft: '20px', display: 'inline-block'}}>
-            <TimeSelector value={time} onChange={ (t) => this.onChangeTime(t)}/>
-          </div>
-        </div>
-        <div style={{textAlign: 'right'}}>
-          <button onClick={this.onCalendarClose.bind(this)}>übernehmen</button>
-        </div>
-      </MyModal>
-    </div>)
+    const props = {
+      invalid: this.props.error || this.state.invalid,
+      errorText: this.props.error ? this.props.error.join(', ') : '',
+      onChange: this.onChange.bind(this),
+      value: this.state.value,
+      disabled: this.props.readOnly,
+      placeholder: this.props.placeholder,
+      fieldProps: this.props,
+      ...extraProps
+    }
+    const Renderer = this.props.editRenderer || getRenderer('DateTimeField', 'edit')
+    return <Renderer {...props}/>
   }
 }
 

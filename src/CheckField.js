@@ -14,21 +14,22 @@ class CheckField extends Field {
     this.props.onChange(!this.props.value)
   }
   renderShow() {
-    let text = this.props.value ? 'yes' : 'no'
-    return (
-      <span>
-        {text}
-      </span>
-    )
-  }
-  renderEdit(extraProps) {
     const props = {
-      className: "form-control",
       onChange: this.onChange.bind(this),
       value: this.props.value,
       ...extraProps
     }
-    return <RenderCheckboxInput {...props}/>
+    const Renderer = getRenderer('CheckField', 'show')
+    return <Renderer {...props}/>
+  }
+  renderEdit(extraProps) {
+    const props = {
+      onChange: this.onChange.bind(this),
+      value: this.props.value,
+      ...extraProps
+    }
+    const Renderer = getRenderer('CheckField', 'edit')
+    return <Renderer {...props}/>
   }
 }
 

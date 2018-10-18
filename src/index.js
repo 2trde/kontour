@@ -7,12 +7,10 @@ import {IntField} from './IntField'
 import {FloatField} from './FloatField'
 import {DateField} from './DateField'
 import {DateTimeField} from './DateTimeField'
-import {TimeSelector} from './TimeSelector'
 import {SelectField} from './SelectField'
 import {CheckField} from './CheckField'
 import {ObjectSelectField} from './ObjectSelectField'
 import {MultiSelectField} from './MultiSelectField'
-import {MyModal} from './MyModal'
 import {setRenderer} from './Renderer'
 
 export {
@@ -28,7 +26,5 @@ export {
   CheckField,
   ObjectSelectField,
   MultiSelectField,
-  MyModal,
-  TimeSelector,
   setRenderer,
 }
