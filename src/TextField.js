@@ -89,7 +89,7 @@ class TextField extends Field {
       errors: this.props.error,
       text: text,
     }
-    const Renderer = this.props.displayRenderer || getRenderer('TextField', 'display', RenderStaticText)
+    const Renderer = this.props.displayRenderer || getRenderer('TextField', 'display')
     return <Renderer {...props}/>
   }
   renderEdit(extraProps) {
@@ -106,7 +106,7 @@ class TextField extends Field {
       fieldProps: this.props,
       ...extraProps
     }
-    const Renderer = this.props.editRenderer || getRenderer('TextField', 'edit', RenderTextInput)
+    const Renderer = this.props.editRenderer || getRenderer('TextField', 'edit')
     return <Renderer {...props}/>
   }
 }
@@ -125,7 +125,6 @@ TextField.propTypes = {
   value: PropTypes.string,
   required: PropTypes.bool,
   regex: PropTypes.object,
-  error: PropTypes.string,
   onTransformInput: PropTypes.func,
   readOnly: PropTypes.bool,
   isPassword: PropTypes.bool,
@@ -134,4 +133,4 @@ TextField.propTypes = {
   displayPlaceholder: PropTypes.string
 }
 
-export {RenderTextInput, TextField}
+export {TextField}

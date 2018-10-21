@@ -2,6 +2,7 @@ import React from 'react'
 import {TextField} from './TextField'
 import {RenderTextInput} from './TextField'
 import moment from 'moment'
+import {getRenderer} from './Renderer'
 
 const inputFormat = moment.defaultFormat // 'YYYY-MM-DDTHH:mm:ssZ'
 const displayFormat = 'DD.MM.YYYY HH:mm'
@@ -48,13 +49,7 @@ class DateTimeField extends TextField {
     if (this.props.onChange)
       this.props.onChange(dateTime.utc().format())
   }
-  onShowCalendar(e) {
-    this.setState({showCalendar: true})
-    e.preventDefault()
-  }
-  onCalendarClose() {
-    this.setState({showCalendar: false})
-  }
+
   renderEdit() {
     const props = {
       invalid: this.props.error || this.state.invalid,
@@ -64,7 +59,7 @@ class DateTimeField extends TextField {
       disabled: this.props.readOnly,
       placeholder: this.props.placeholder,
       fieldProps: this.props,
-      ...extraProps
+      renderTextField: super.renderEdit.bind(this)
     }
     const Renderer = this.props.editRenderer || getRenderer('DateTimeField', 'edit')
     return <Renderer {...props}/>

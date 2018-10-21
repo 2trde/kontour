@@ -1,8 +1,5 @@
-import {changeRenderStatic} from './Field'
 import {Form} from './Form'
-import {Table} from './Table'
 import {TextField} from './TextField'
-import {TextAreaField} from './TextAreaField'
 import {IntField} from './IntField'
 import {FloatField} from './FloatField'
 import {DateField} from './DateField'
@@ -11,13 +8,12 @@ import {SelectField} from './SelectField'
 import {CheckField} from './CheckField'
 import {ObjectSelectField} from './ObjectSelectField'
 import {MultiSelectField} from './MultiSelectField'
-import {setRenderer} from './Renderer'
+import {getRenderer, setRenderer} from './Renderer'
+import {getAttribute, setAttribute} from './ObjectHelper'
 
 export {
-  Table,
   Form,
   TextField,
-  TextAreaField,
   IntField,
   FloatField,
   DateField,
@@ -27,4 +23,6 @@ export {
   ObjectSelectField,
   MultiSelectField,
   setRenderer,
+  getRenderer,
+  getAttribute, setAttribute
 }

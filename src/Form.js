@@ -18,7 +18,7 @@ class Form extends Component {
       field: child,
       label: child.props.label
     }
-    const Renderer = this.props.formElementRenderer || getRenderer('Form', 'element', RenderFormElement)
+    const Renderer = this.props.formElementRenderer || getRenderer('Form', 'element')
     return <Renderer {...props}/>
   }
   render() {
@@ -41,7 +41,7 @@ class Form extends Component {
     }.bind(this));
 
     const children = React.Children.map(childrenWithProps, (child) => { return this.renderFormElement(child) } ) 
-    const Renderer = this.props.formRenderer || getRenderer('Form', 'form', RenderForm)
+    const Renderer = this.props.formRenderer || getRenderer('Form', 'form')
     return <Renderer>{children}</Renderer>
   }
 
@@ -64,4 +64,4 @@ Form.propTypes = {
   errors: PropTypes.object
 }
 
-export {Form, RenderFormElement};
+export {Form};

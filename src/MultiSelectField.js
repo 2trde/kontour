@@ -1,6 +1,7 @@
 import React from 'react'
 import {Field} from './Field'
 import PropTypes from 'prop-types'
+import {getRenderer} from './Renderer'
 
 class MultiSelectField extends Field {
   constructor(props) {
@@ -43,10 +44,10 @@ class MultiSelectField extends Field {
   renderShow() {
     if (!this.props.options) return ''
     const props = {
-      invalid: this.state.invalid
-      onChange: this.handleOnChange.bind(this)
-      value: this.props.value
-      options: this.getOptions() 
+      invalid: this.state.invalid,
+      onChange: this.handleOnChange.bind(this),
+      value: this.props.value,
+      options: this.getOptions() ,
       disable: this.props.readOnly
     }
     const Renderer = getRenderer('MultiSelectField', 'display')
@@ -56,10 +57,10 @@ class MultiSelectField extends Field {
   renderEdit() {
     if (!this.props.options) return ''
     const props = {
-      invalid: this.state.invalid
-      onChange: this.handleOnChange.bind(this)
-      value: this.props.value
-      options: this.getOptions() 
+      invalid: this.state.invalid,
+      onChange: this.handleOnChange.bind(this),
+      value: this.props.value,
+      options: this.getOptions(), 
       disable: this.props.readOnly
     }
 
@@ -69,13 +70,11 @@ class MultiSelectField extends Field {
 }
 
 MultiSelectField.defaultProps = {
-  renderer: RenderMultiSelect,
   keyFun: (val) => val,
   textFun: (val) => val
 }
 
 MultiSelectField.propTypes = {
-  renderer: PropTypes.func,
   value: PropTypes.array,
   options: PropTypes.array.isRequired,
   textFun: PropTypes.func,
