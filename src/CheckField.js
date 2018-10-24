@@ -1,5 +1,6 @@
 import React from 'react'
 import {Field} from './Field'
+import {getRenderer} from './Renderer'
 
 const RenderCheckboxInput = ({style, onChange, value}) => {
   const classNames = ''

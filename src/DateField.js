@@ -1,6 +1,5 @@
 import React from 'react'
 import {TextField} from './TextField'
-import {RenderTextInput} from './TextField'
 import moment from 'moment'
 import {getRenderer} from './Renderer'
 

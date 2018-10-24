@@ -1,6 +1,7 @@
 import React from 'react'
 import {TextField} from './TextField'
 import PropTypes from 'prop-types'
+import {getRenderer} from './Renderer'
 
 class FloatField extends TextField {
   inputFlavor() {

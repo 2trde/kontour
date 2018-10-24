@@ -1,6 +1,5 @@
 import React from 'react'
 import {TextField} from './TextField'
-import {RenderTextInput} from './TextField'
 import moment from 'moment'
 import {getRenderer} from './Renderer'
 
@@ -26,40 +25,16 @@ class DateTimeField extends TextField {
   textToValue(text) {
     return text == '' ? null : moment(text, displayFormat).utc().format()
   }
-  onChangeCal(d) {
-    let val = d.utc()
-    val = val.seconds(0)
-    if (this.props.onChange)
-      this.props.onChange(val.format())
-  }
-
-  currentMoment() {
-    return this.props.value ? moment(this.props.value, inputFormat) : moment()
-  }
-
-  onChangeTime(t) {
-    const timeParts = t.split(':')
-    const hour = parseInt(timeParts[0])
-    const min = parseInt(timeParts[1])
-
-    const dateTime = this.currentMoment()
-    dateTime.hour(hour)
-    dateTime.minute(min)
-
-    if (this.props.onChange)
-      this.props.onChange(dateTime.utc().format())
-  }
-
   renderEdit() {
     const props = {
       invalid: this.props.error || this.state.invalid,
       errorText: this.props.error ? this.props.error.join(', ') : '',
-      onChange: this.onChange.bind(this),
+      onChange: this.props.onChange.bind(this),
       value: this.state.value,
       disabled: this.props.readOnly,
       placeholder: this.props.placeholder,
       fieldProps: this.props,
-      renderTextField: super.renderEdit.bind(this)
+      renderTextField: super.renderEdit.bind(this),
     }
     const Renderer = this.props.editRenderer || getRenderer('DateTimeField', 'edit')
     return <Renderer {...props}/>

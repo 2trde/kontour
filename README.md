@@ -1,19 +1,31 @@
 # kontour
 
-[![Travis][build-badge]][build]
-[![npm package][npm-badge]][npm]
-[![Coveralls][coveralls-badge]][coveralls]
+> 
 
-Kontour is an opinionated framework to render forms and tables. Both table and form support both
-editing and displaying of data. Each field component that can be used supports both modes.
+[![NPM](https://img.shields.io/npm/v/kontour.svg)](https://www.npmjs.com/package/kontour) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
-Large forms can be created once and support both displaying and editing by changing a property.
+## Install
 
-[build-badge]: https://img.shields.io/travis/user/repo/master.png?style=flat-square
-[build]: https://travis-ci.org/user/repo
+```bash
+npm install --save kontour
+```
 
-[npm-badge]: https://img.shields.io/npm/v/npm-package.png?style=flat-square
-[npm]: https://www.npmjs.org/package/npm-package
+## Usage
 
-[coveralls-badge]: https://img.shields.io/coveralls/user/repo/master.png?style=flat-square
-[coveralls]: https://coveralls.io/github/user/repo
+```jsx
+import React, { Component } from 'react'
+
+import MyComponent from 'kontour'
+
+class Example extends Component {
+  render () {
+    return (
+      <MyComponent />
+    )
+  }
+}
+```
+
+## License
+
+MIT © [](https://github.com/)
