@@ -30,7 +30,7 @@ class DateTimeField extends TextField {
       invalid: this.props.error || this.state.invalid,
       errorText: this.props.error ? this.props.error.join(', ') : '',
       onChange: this.props.onChange.bind(this),
-      value: this.state.value,
+      value: this.props.value,
       disabled: this.props.readOnly,
       placeholder: this.props.placeholder,
       fieldProps: this.props,
