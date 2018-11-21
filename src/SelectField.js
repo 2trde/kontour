@@ -72,7 +72,7 @@ class SelectField extends Field {
     this.getOptionsInclEmpty().forEach((val) => {
       if (typeof(val.key) != 'undefined' && val.key == this.props.value)
         text = val.text
-    }) 
+    })
     if (!text || text == '') text = '\u00a0'
     return React.createElement(getRenderer('SelectField', 'display', RenderSelectDisplay), {text}, '')
   }
@@ -83,7 +83,7 @@ class SelectField extends Field {
       onChange: this.handleOnChange.bind(this),
       value: this.props.value,
       options: this.getOptionsInclEmpty(),
-      disable: this.props.readOnly,
+      disabled: this.props.readOnly,
       fieldProps: this.props,
       placeholder: this.props.placeholder
     }
