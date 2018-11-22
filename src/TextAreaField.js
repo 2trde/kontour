@@ -23,6 +23,7 @@ class TextAreaField extends TextField {
       value: this.state.value,
       disabled: this.props.readOnly,
       isPassword: this.props.isPassword,
+      fieldProps: this.props,
       placeholder: this.props.placeholder,
       ...extraProps
     }

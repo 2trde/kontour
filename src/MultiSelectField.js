@@ -48,6 +48,7 @@ class MultiSelectField extends Field {
       onChange: this.handleOnChange.bind(this),
       value: this.props.value,
       options: this.getOptions() ,
+      fieldProps: this.props,
       disable: this.props.readOnly
     }
     const Renderer = getRenderer('MultiSelectField', 'display')
@@ -61,6 +62,7 @@ class MultiSelectField extends Field {
       onChange: this.handleOnChange.bind(this),
       value: this.props.value,
       options: this.getOptions(), 
+      fieldProps: this.props,
       disable: this.props.readOnly
     }
 

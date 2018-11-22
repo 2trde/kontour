@@ -41,6 +41,7 @@ class DateField extends TextField {
       showCalendar: this.state.showCalendar, 
       onShowCalendar: () => this.setState({showCalendar: true}), 
       onHideCalendar: () => this.setState({showCalendar: false}),
+      fieldProps: this.props,
       onChange: this.props.onChange.bind(this)
     }
     return React.createElement(getRenderer('DateField', 'edit'), props, '')
