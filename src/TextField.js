@@ -88,6 +88,7 @@ class TextField extends Field {
     const props = {
       errors: this.props.error,
       text: text,
+      fieldProps: this.props,
     }
     const Renderer = this.props.displayRenderer || getRenderer('TextField', 'display')
     return <Renderer {...props}/>
