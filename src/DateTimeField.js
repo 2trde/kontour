@@ -35,6 +35,7 @@ class DateTimeField extends TextField {
       placeholder: this.props.placeholder,
       fieldProps: this.props,
       renderTextField: super.renderEdit.bind(this),
+      dateTimeText: this.valueToText(this.props.value)
     }
     const Renderer = this.props.editRenderer || getRenderer('DateTimeField', 'edit')
     return <Renderer {...props}/>

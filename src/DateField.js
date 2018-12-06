@@ -35,14 +35,15 @@ class DateField extends TextField {
   }
   renderEdit() {
     const props = {
-      textFieldRender: super.renderEdit.bind(this), 
-      value: this.props.value, 
+      textFieldRender: super.renderEdit.bind(this),
+      value: this.props.value,
       placeholder: this.props.placeholder,
-      showCalendar: this.state.showCalendar, 
-      onShowCalendar: () => this.setState({showCalendar: true}), 
+      showCalendar: this.state.showCalendar,
+      onShowCalendar: () => this.setState({showCalendar: true}),
       onHideCalendar: () => this.setState({showCalendar: false}),
       fieldProps: this.props,
-      onChange: this.props.onChange.bind(this)
+      onChange: this.props.onChange.bind(this),
+      dateText: this.valueToText(this.props.value)
     }
     return React.createElement(getRenderer('DateField', 'edit'), props, '')
   }
