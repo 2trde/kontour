@@ -3,7 +3,7 @@ import {TextField} from './TextField'
 import moment from 'moment'
 import {getRenderer} from './Renderer'
 
-const inputFormat = moment.defaultFormat // 'YYYY-MM-DDTHH:mm:ssZ'
+const inputFormat = moment.ISO_8601 // 'YYYY-MM-DDTHH:mm:ssZ'
 const displayFormat = 'DD.MM.YYYY HH:mm'
 
 class DateTimeField extends TextField {
@@ -13,9 +13,9 @@ class DateTimeField extends TextField {
 
   valueToText(value) {
     if (typeof(value) == 'string') {
-      value = moment(value, inputFormat)
+      value = moment.utc(value, inputFormat)
     }
-    const txt = (value) ? value.format(displayFormat) : ''
+    const txt = (value) ? value.local().format(displayFormat) : ''
     return txt
   }
   isValidText(text) {
