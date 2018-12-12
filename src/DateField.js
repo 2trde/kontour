@@ -35,6 +35,7 @@ class DateField extends TextField {
   }
   renderEdit() {
     const props = {
+      invalid: this.props.error || this.state.invalid,
       textFieldRender: super.renderEdit.bind(this),
       value: this.props.value,
       placeholder: this.props.placeholder,
