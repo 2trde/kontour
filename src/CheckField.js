@@ -14,7 +14,7 @@ class CheckField extends Field {
   onChange(e) {
     this.props.onChange(!this.props.value)
   }
-  renderShow() {
+  renderShow(extraProps) {
     const props = {
       onChange: this.onChange.bind(this),
       value: this.props.value,
