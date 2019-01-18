@@ -84,7 +84,7 @@ class SelectField extends Field {
 
   renderEdit() {
     const props = {
-      invalid: this.state.invalid,
+      invalid: this.props.error || this.state.invalid,
       onChange: this.handleOnChange.bind(this),
       value: this.props.value,
       options: this.getOptionsInclEmpty(),
