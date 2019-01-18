@@ -79,7 +79,7 @@ class SelectField extends Field {
         text = val.text
     })
     if (!text || text == '') text = '\u00a0'
-    return React.createElement(getRenderer('SelectField', 'display', RenderSelectDisplay), {text}, '')
+    return React.createElement(getRenderer('SelectField', 'display', RenderSelectDisplay), {text, fieldProps: this.props}, '')
   }
 
   renderEdit() {
