@@ -16,7 +16,8 @@ class Form extends Component {
   renderFormElement(child) {
     const props = {
       field: child,
-      label: child.props.label
+      label: child.props.label,
+      fieldProps: this.props
     }
     const Renderer = this.props.formElementRenderer || getRenderer('Form', 'element')
     return <Renderer {...props}/>
@@ -33,7 +34,8 @@ class Form extends Component {
         onChange: (newValue) => this.changeAttribute(child.props.attr, newValue),
         onValidChange: (valid) => this.updateValidStatus(child.props.attr, valid),
         edit: this.props.edit,
-        error: error
+        error: error,
+        fieldProps: this.props
       }
       if (this.props.value && child.props.attr) 
         props.value = getAttribute(this.props.value, child.props.attr)
