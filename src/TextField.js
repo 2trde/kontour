@@ -93,7 +93,7 @@ class TextField extends Field {
     const Renderer = this.props.displayRenderer || getRenderer('TextField', 'display')
     return <Renderer {...props}/>
   }
-  renderEdit(extraProps) {
+  renderEdit(extraProps, editRenderer) {
     const props = {
       invalid: this.props.error || this.state.invalid,
       errorText: this.props.error ? this.props.error.join(', ') : '',
@@ -105,10 +105,11 @@ class TextField extends Field {
       placeholder: this.props.placeholder,
       inputFlavor: this.inputFlavor(),
       fieldProps: this.props,
+      key: '123456',
       ...extraProps
     }
-    const Renderer = this.props.editRenderer || getRenderer('TextField', 'edit')
-    return <Renderer {...props}/>
+    const Renderer = editRenderer || this.props.editRenderer || getRenderer('TextField', 'edit')
+    return <Renderer key='renderer' {...props}/>
   }
 }
 

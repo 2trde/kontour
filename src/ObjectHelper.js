@@ -1,4 +1,5 @@
 const getAttributeRec = (obj, attrList) => {
+  if (!obj) return null
   if (attrList.length > 1) {
     const newList = attrList.slice(1)
     return getAttributeRec(obj[attrList[0]], newList)
