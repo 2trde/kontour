@@ -12,7 +12,7 @@ class DateTimeField extends TextField {
   }
 
   valueToText(value) {
-    if (typeof(value) == 'string') {
+    if (typeof (value) === 'string') {
       value = moment.utc(value, inputFormat)
     }
     const txt = (value) ? value.local().format(displayFormat) : ''
@@ -38,7 +38,7 @@ class DateTimeField extends TextField {
       dateTimeText: this.valueToText(this.props.value)
     }
     const Renderer = this.props.editRenderer || getRenderer('DateTimeField', 'edit')
-    return <Renderer {...props}/>
+    return <Renderer {...props} />
   }
 }
 

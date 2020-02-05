@@ -7,9 +7,9 @@ const RenderTextAreaInput = ({invalid, errorText, style, onChange, value, disabl
   const classNames = ('form-control ' + validClass).trim()
   style = {...style, display: 'inline-block'}
   return (
-    <textarea style={ style } title={errorText} className={classNames}
+    <textarea style={style} title={errorText} className={classNames}
       onChange={({target}) => onChange(target.value)}
-      value={value ? value : ''} disabled={disabled} placeholder={placeholder} />
+      value={value || ''} disabled={disabled} placeholder={placeholder} />
   )
 }
 
@@ -18,7 +18,7 @@ class TextAreaField extends TextField {
     const props = {
       invalid: this.props.error || this.state.invalid,
       errorText: this.props.error ? this.props.error.join(', ') : '',
-      className: "form-control",
+      className: 'form-control',
       onChange: this.onChange.bind(this),
       value: this.state.value,
       disabled: this.props.readOnly,
@@ -27,8 +27,18 @@ class TextAreaField extends TextField {
       placeholder: this.props.placeholder,
       ...extraProps
     }
-    return <RenderTextAreaInput {...props}/>
+    return <RenderTextAreaInput {...props} />
   }
+}
+
+RenderTextAreaInput.propTypes = {
+  value: PropTypes.string,
+  onChange: PropTypes.func,
+  style: PropTypes.object,
+  invalid: PropTypes.bool,
+  disabled: PropTypes.bool,
+  errorText: PropTypes.string,
+  placeholder: PropTypes.string
 }
 
 export {TextAreaField}

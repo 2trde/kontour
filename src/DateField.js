@@ -9,8 +9,8 @@ class DateField extends TextField {
   }
 
   valueToText(value) {
-    if (typeof(value) == 'string') {
-      value = moment(value, "YYYY-MM-DD")
+    if (typeof (value) === 'string') {
+      value = moment(value, 'YYYY-MM-DD')
     }
     return (value) ? value.format(this.props.displayPattern) : ''
   }
@@ -23,8 +23,7 @@ class DateField extends TextField {
   }
   onChangeCal(d) {
     const val = d.format('YYYY-MM-DD')
-    if (this.props.onChange)
-      this.props.onChange(val)
+    if (this.props.onChange) { this.props.onChange(val) }
   }
   onShowCalendar(e) {
     this.setState({showCalendar: true})

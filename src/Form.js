@@ -1,17 +1,16 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import {getAttribute, setAttribute} from './ObjectHelper'
 import PropTypes from 'prop-types'
 import {getRenderer} from './Renderer'
 
 class Form extends Component {
-  constructor(props)  {
+  constructor(props) {
     super(props)
     this.fieldValidStatus = {}
   }
   changeAttribute(attribute, value) {
     const newValue = setAttribute(this.props.value, attribute, value)
-    if (this.props.onChange)
-      this.props.onChange(newValue)
+    if (this.props.onChange) { this.props.onChange(newValue) }
   }
   renderFormElement(child) {
     const props = {
@@ -19,12 +18,12 @@ class Form extends Component {
       label: child.props.label,
     }
     const Renderer = this.props.formElementRenderer || getRenderer('Form', 'element')
-    return <Renderer {...props}/>
+    return <Renderer {...props} />
   }
   render() {
     if (!this.props.value) return ''
     const list = React.Children.toArray(this.props.children).filter((f) => f.props && (f.props.visible == null || f.props.visible == true))
-                 .filter(child => !child.props.cond || child.props.cond(this.props.value))
+      .filter(child => !child.props.cond || child.props.cond(this.props.value))
 
     let childrenWithProps = React.Children.map(list, function(child) {
       const error = this.props.errors ? getAttribute(this.props.errors, child.props.attr) : null
@@ -36,12 +35,11 @@ class Form extends Component {
         error: error,
         fieldProps: this.props
       }
-      if (this.props.value && child.props.attr) 
-        props.value = getAttribute(this.props.value, child.props.attr)
+      if (this.props.value && child.props.attr) { props.value = getAttribute(this.props.value, child.props.attr) }
       return React.cloneElement(child, props)
-    }.bind(this));
+    }.bind(this))
 
-    const children = React.Children.map(childrenWithProps, (child) => { return this.renderFormElement(child) } ) 
+    const children = React.Children.map(childrenWithProps, (child) => { return this.renderFormElement(child) })
     const Renderer = this.props.formRenderer || getRenderer('Form', 'form')
     return <Renderer fieldProps={this.props}>{children}</Renderer>
   }
@@ -50,9 +48,8 @@ class Form extends Component {
     if (this.fieldValidStatus[attr] !== valid) {
       const validStatus = {...this.fieldValidStatus}
       validStatus[attr] = valid
-      const allValid = Object.entries(validStatus).filter(([k, v]) => v == false).length == 0
-      if (this.props.onValidChange && this.fieldValidStatus !== validStatus)
-        this.props.onValidChange(allValid)
+      const allValid = Object.entries(validStatus).filter(([, v]) => v == false).length == 0
+      if (this.props.onValidChange && this.fieldValidStatus !== validStatus) { this.props.onValidChange(allValid) }
       this.fieldValidStatus = validStatus
     }
   }
@@ -62,7 +59,11 @@ Form.propTypes = {
   value: PropTypes.object,
   edit: PropTypes.bool,
   onChange: PropTypes.func,
-  errors: PropTypes.object
+  errors: PropTypes.object,
+  formElementRenderer: PropTypes.func,
+  formRenderer: PropTypes.func,
+  onValidChange: PropTypes.func,
+  children: PropTypes.any
 }
 
-export {Form};
+export {Form}

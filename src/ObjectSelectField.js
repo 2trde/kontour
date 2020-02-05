@@ -1,4 +1,3 @@
-import React from 'react'
 import {SelectField} from './SelectField'
 import PropTypes from 'prop-types'
 
@@ -14,11 +13,7 @@ class ObjectSelectField extends SelectField {
   objectToKeyValuePair(obj) {
     let text = ''
     const key = obj[this.props.keyAttr]
-    if (this.props.textAttr)
-      text = obj[this.props.textAttr]
-    else if (this.props.textFun)
-      text = this.props.textFun(obj)
-    else throw Error("define either textAttr or textFun")
+    if (this.props.textAttr) { text = obj[this.props.textAttr] } else if (this.props.textFun) { text = this.props.textFun(obj) } else throw Error('define either textAttr or textFun')
     return {key: key, text: text}
   }
 }
@@ -31,4 +26,3 @@ ObjectSelectField.propTypes = {
 }
 
 export {ObjectSelectField}
-

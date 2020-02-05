@@ -19,10 +19,10 @@ class MultiSelectField extends Field {
   }
 
   getOptions() {
-    return this.props.options.map((opt, i) => {
+    return this.props.options.map((opt) => {
       return {
         text: this.props.textFun(opt),
-        selected: this.isOptionSelected(opt), 
+        selected: this.isOptionSelected(opt),
         id: this.props.keyFun(opt),
         value: opt
       }
@@ -47,12 +47,12 @@ class MultiSelectField extends Field {
       invalid: this.state.invalid,
       onChange: this.handleOnChange.bind(this),
       value: this.props.value,
-      options: this.getOptions() ,
+      options: this.getOptions(),
       fieldProps: this.props,
       disable: this.props.readOnly
     }
     const Renderer = getRenderer('MultiSelectField', 'display')
-    return <Renderer {...props}/>
+    return <Renderer {...props} />
   }
 
   renderEdit() {
@@ -61,13 +61,13 @@ class MultiSelectField extends Field {
       invalid: this.state.invalid,
       onChange: this.handleOnChange.bind(this),
       value: this.props.value,
-      options: this.getOptions(), 
+      options: this.getOptions(),
       fieldProps: this.props,
       disable: this.props.readOnly
     }
 
     const Renderer = getRenderer('MultiSelectField', 'edit')
-    return <Renderer {...props}/>
+    return <Renderer {...props} />
   }
 }
 
@@ -84,4 +84,3 @@ MultiSelectField.propTypes = {
 }
 
 export {MultiSelectField}
-

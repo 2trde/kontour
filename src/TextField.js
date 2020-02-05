@@ -6,7 +6,7 @@ import {getRenderer} from './Renderer'
 class TextField extends Field {
   constructor(props) {
     super(props)
-    const isInvalid = (this.props.required && !this.props.value)
+    const isInvalid = (props.required && !props.value)
     this.state = {
       invalid: isInvalid,
       value: this.valueToText(props.value)
@@ -19,16 +19,15 @@ class TextField extends Field {
     return 'text'
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.value !== this.props.value) {
-      const isInvalid = this.props.required && !nextProps.value
-      const newState = {value: this.valueToText(nextProps.value),
-                     invalid: isInvalid}
-      this.setState(newState)
-      if (this.props.onValidChange)
-        this.props.onValidChange(!isInvalid)
+      const isInvalid = nextProps.required && !nextProps.value
+      this.setState({value: this.valueToText(nextProps.value), invalid: isInvalid})
+      if (nextProps.onValidChange)
+        nextProps.onValidChange(!isInvalid)
     }
   }
+
   onChange(text) {
     if (this.props.onTextChange) {
       this.props.onTextChange(text)
@@ -38,30 +37,23 @@ class TextField extends Field {
       text = this.props.onTransformInput(text)
     }
 
-    let isInvalid = false
-    if (text == '') {
+    let isInvalid = true
+    if (text === '') {
       isInvalid = this.props.required
-      this.setState({value: text, invalid: this.props.required})
-      if (this.props.onChange)
-        this.props.onChange(null)
-    }
-    else if (this._isValidText(text)) {
+      if (this.props.onChange) { this.props.onChange(null) }
+    } else if (this._isValidText(text)) {
       isInvalid = false
-      this.setState({value: text, invalid: false})
-      if (this.props.onChange)
-        this.props.onChange(this.textToValue(text))
-    } else {
-      isInvalid = true
-      this.setState({value: text, invalid: true})
+      if (this.props.onChange) { this.props.onChange(this.textToValue(text)) }
     }
-    if (this.props.onValidChange)
-      this.props.onValidChange(!isInvalid)
+    if (this.props.onValidChange) { this.props.onValidChange(!isInvalid) }
+    this.setState({value: text, invalid: isInvalid})
   }
+
   valueToText(value) {
-    if (value == null)
-      return ''
+    if (value == null) { return '' }
     return '' + value
   }
+
   isValidText(text) {
     if (this.props.regex && !text.match(this.props.regex)) {
       return false
@@ -71,33 +63,34 @@ class TextField extends Field {
     }
     return true
   }
+
   _isValidText(text) {
     return text === null || text === '' || this.isValidText(text)
   }
+
   textToValue(text) {
     return text
   }
+
   renderShow() {
     let text = ''
-    if (this.props.value)
-      text = ''+this.valueToText(this.props.value)
-    if (typeof(this.props.value) == 'undefined' && this.props.displayPlaceholder)
-      text = this.props.displayPlaceholder
-    if (this.props.isPassword)
-      text = text.replace(/./g, '*')
+    if (this.props.value) { text = '' + this.valueToText(this.props.value) }
+    if (typeof (this.props.value) === 'undefined' && this.props.displayPlaceholder) { text = this.props.displayPlaceholder }
+    if (this.props.isPassword) { text = text.replace(/./g, '*') }
     const props = {
       errors: this.props.error,
       text: text,
-      fieldProps: this.props,
+      fieldProps: this.props
     }
     const Renderer = this.props.displayRenderer || getRenderer('TextField', 'display')
-    return <Renderer {...props}/>
+    return <Renderer {...props} />
   }
+
   renderEdit(extraProps, editRenderer) {
     const props = {
       invalid: this.props.error || this.state.invalid,
       errorText: this.props.error ? this.props.error.join(', ') : '',
-      className: "form-control",
+      className: 'form-control',
       onChange: this.onChange.bind(this),
       value: this.state.value,
       disabled: this.props.readOnly,

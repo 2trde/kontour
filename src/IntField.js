@@ -1,4 +1,3 @@
-import React from 'react'
 import {TextField} from './TextField'
 import PropTypes from 'prop-types'
 
@@ -8,7 +7,7 @@ class IntField extends TextField {
   }
 
   isValidText(value) {
-    return value.match(/^\d*$/) 
+    return value.match(/^\d*$/)
   }
   textToValue(text) {
     return parseInt(text, 10)

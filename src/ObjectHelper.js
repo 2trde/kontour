@@ -3,11 +3,9 @@ const getAttributeRec = (obj, attrList) => {
   if (attrList.length > 1) {
     const newList = attrList.slice(1)
     return getAttributeRec(obj[attrList[0]], newList)
-  }
-  else
-  {
+  } else {
     const val = obj ? obj[attrList[0]] : null
-    return val 
+    return val
   }
 }
 
@@ -23,11 +21,9 @@ const setAttributeRec = (obj, attrList, val) => {
     const newList = attrList.slice(1)
     newObj[attrList[0]] = setAttributeRec(obj[attrList[0]], newList, val)
     return newObj
-  }
-  else
-  {
+  } else {
     newObj[attrList[0]] = val
-    return newObj 
+    return newObj
   }
 }
 
@@ -35,6 +31,5 @@ const setAttribute = (obj, attrStr, val) => {
   const attrList = attrStr.split('.')
   return setAttributeRec(obj, attrList, val)
 }
-
 
 export {getAttribute, setAttribute}

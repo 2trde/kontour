@@ -24,5 +24,6 @@ export {
   MultiSelectField,
   setRenderer,
   getRenderer,
-  getAttribute, setAttribute
+  getAttribute,
+  setAttribute
 }

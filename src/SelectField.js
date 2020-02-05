@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import {Field} from './Field'
 import {getRenderer} from './Renderer'
 
@@ -9,9 +10,9 @@ const RenderSelectDisplay = ({text}) => {
 const RenderSelect = ({invalid, onChange, value, options, disabled}) => {
   const validClass = invalid ? 'is-invalid' : ''
   const classNames = ('form-control ' + validClass).trim()
-  const val = typeof(value) == 'undefined' || value === null  ? '' : value
+  const val = typeof (value) === 'undefined' || value === null ? '' : value
   return (
-    <select onChange={({target}) => onChange(target.value == '' ? null : target.value)} value={val} className={classNames} disabled={disabled}>
+    <select onChange={({target}) => onChange(target.value === '' ? null : target.value)} value={val} className={classNames} disabled={disabled}>
       {options.map((option) => {
         return <option key={option.key} value={option.key} >{ option.text }</option>
       })}
@@ -22,7 +23,7 @@ const RenderSelect = ({invalid, onChange, value, options, disabled}) => {
 class SelectField extends Field {
   constructor(props) {
     super(props)
-    const isInvalid = this.props.required && this.isEmpty(this.props.value)
+    const isInvalid = this.isInvalid(props)
     this.state = {
       invalid: isInvalid
     }
@@ -30,26 +31,21 @@ class SelectField extends Field {
       props.onValidChange(!isInvalid)
   }
 
-
-  isEmpty(val) {
-    return val == null
+  isInvalid(props) {
+    return props.required && props.value == null
   }
 
-  componentWillReceiveProps(nextProps) {
-    const isInvalid = nextProps.required && this.isEmpty(nextProps.value)
-    this.setState({
-      invalid: nextProps.required && this.isEmpty(nextProps.value)
-    })
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    const isInvalid = this.isInvalid(nextProps)
+    this.setState({invalid: isInvalid})
     if (this.props.onValidChange)
       this.props.onValidChange(!isInvalid)
   }
+
   getOptions() {
     if (this.props.options) {
       return this.props.options.map((opt) => {
-        if (typeof(opt) == 'string')
-          return {key: opt, text: opt}
-        else
-          return opt
+        if (typeof (opt) === 'string') { return {key: opt, text: opt} } else { return opt }
       })
     } else {
       return []
@@ -57,28 +53,22 @@ class SelectField extends Field {
   }
 
   getOptionsInclEmpty() {
-    if (this.props.forceSelect)
-      return this.getOptions()
-    else
-      return [{key: null, text: ""}].concat(this.getOptions())
+    if (this.props.forceSelect) { return this.getOptions() } else { return [{key: null, text: ''}].concat(this.getOptions()) }
   }
 
   handleOnChange(newValue) {
-    if (this.props.onChange)
-      this.props.onChange(newValue)
+    if (this.props.onChange) { this.props.onChange(newValue) }
     const isInvalid = this.props.required && !newValue
     this.setState({invalid: isInvalid})
-    if (this.props.onValidChange)
-      this.props.onValidChange(!isInvalid)
+    if (this.props.onValidChange) { this.props.onValidChange(!isInvalid) }
   }
 
   renderShow() {
     let text = '\u00a0'
     this.getOptionsInclEmpty().forEach((val) => {
-      if (typeof(val.key) != 'undefined' && val.key == this.props.value)
-        text = val.text
+      if (typeof (val.key) !== 'undefined' && val.key === this.props.value) { text = val.text }
     })
-    if (!text || text == '') text = '\u00a0'
+    if (!text || text === '') text = '\u00a0'
     return React.createElement(getRenderer('SelectField', 'display', RenderSelectDisplay), {text, fieldProps: this.props}, '')
   }
 
@@ -95,6 +85,18 @@ class SelectField extends Field {
 
     return React.createElement(getRenderer('SelectField', 'edit', RenderSelect), props, '')
   }
+}
+
+RenderSelectDisplay.propTypes = {
+  text: PropTypes.string
+}
+
+RenderSelect.propTypes = {
+  value: PropTypes.any,
+  onChange: PropTypes.func,
+  invalid: PropTypes.bool,
+  disabled: PropTypes.bool,
+  options: PropTypes.array
 }
 
 export {SelectField}
