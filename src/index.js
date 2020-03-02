@@ -13,6 +13,7 @@ import {getAttribute, setAttribute} from './ObjectHelper'
 
 export {
   Form,
+  Field,
   TextField,
   IntField,
   FloatField,
