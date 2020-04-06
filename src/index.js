@@ -1,4 +1,5 @@
 import {Form} from './Form'
+import {Field} from './Field'
 import {TextField} from './TextField'
 import {IntField} from './IntField'
 import {FloatField} from './FloatField'
